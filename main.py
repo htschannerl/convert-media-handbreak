@@ -13,12 +13,12 @@ def convert(srcpath,dstpath):
                 result = subprocess.run(["HandBrakeCLI", "-Z", "Very Fast 2160p60 4K AV1","-i",filepath,"-o",output])
                 if result.returncode == 0:
                     print("Finished",file,output)
-                    os.remove(filepath)
+                    #os.remove(filepath)
             else:
                 print(file,"already exist removing the source")
-                os.remove(filepath)
+                #os.remove(filepath)
 
 
 if __name__ == '__main__':
-    convert('/mnt/dados/DashCam','/mnt/dados/DashCam/Converted')
+    convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
 
