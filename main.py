@@ -16,7 +16,7 @@ def convert(srcpath,dstpath):
                 #    os.remove(file)
             else:
                 print(file,"already exist removing the source")
-                os.remove(file)
+                os.remove(filepath)
 
 
 if __name__ == '__main__':
