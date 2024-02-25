@@ -10,7 +10,7 @@ def convert(srcpath,dstpath):
             print("Starting", filepath)
             t = datetime.datetime(int(file[0:4]), int(file[4:6]), int(file[6:8]), int(file[8:10]), int(file[10:12]), int(file[12:14]))
             t.strftime('%a, %d %b %Y %H:%M:%S')
-            output = dstpath + "/" + t + file[16:18] + ".mp4"
+            output = dstpath + "/" + str(t) + file[16:18] + ".mp4"
             if not os.path.exists(output):
                 print(output)
                 result = subprocess.run(["HandBrakeCLI", "-Z", "Very Fast 2160p60 4K AV1","-i",filepath,"-o",output])
