@@ -8,7 +8,7 @@ def convert(srcpath,dstpath):
         os.path.isfile(srcpath + "/" + file)
         output = dstpath + "/" + file[0:4] + "-" + file[4:6] + "-" + file[6:8] + "_" + file[8:10] + "-" + file[10:12] + "-" + file[12:14] + "-" + file[14:16] + file[16:18] + ".mp4"
         if not os.path.isfile(output):
-            result = subprocess.run(["HandBrakeCLI", "-Z", "Very Fast 2160p60 4K AV1","-i", srcpath + "/" + file,"-o",output])
+            result = subprocess.run(["HandBrakeCLI -Z \"Very Fast 2160p60 4K AV1\" -i " + srcpath + "/" + file + " -o " + output])
             print(result.args)
         print("Finished",file,output)
 
