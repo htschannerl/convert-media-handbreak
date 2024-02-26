@@ -14,7 +14,7 @@ def convert(srcpath,dstpath):
             output = dstpath + "/" + str(t) + file[16:18] + ".mp4"
             if not os.path.exists(output):
                 print(output)
-                result = subprocess.run(["HandBrakeCLI", "-Z", "Very Fast 2160p60 4K AV1","-i",filepath,"-o",output])
+                result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC","-i",filepath,"-o",output])
                 if result.returncode == 0:
                     print("Finished",file,output)
                     #os.remove(filepath)
