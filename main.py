@@ -4,9 +4,8 @@ import datetime
 import logging
 def convert(srcpath,dstpath):
     files = os.listdir(srcpath)
-    total = os.listdir(dstpath)
-    for a in total:
-        print(a)
+    total = len(os.listdir(dstpath))
+    print(total)
     for file in files:
         filepath = srcpath + "/" + file
         if os.path.isfile(filepath):
