@@ -5,6 +5,7 @@ import logging
 def convert(srcpath,dstpath):
     files = os.listdir(srcpath)
     total = len(os.listdir(dstpath))
+    print(total)
     for file in files:
         filepath = srcpath + "/" + file
         if os.path.isfile(filepath):
@@ -14,11 +15,11 @@ def convert(srcpath,dstpath):
             output = dstpath + "/S01E" + str(total).zfill(8) + "." + str(t) + ".mp4"
             if not os.path.exists(output):
                 print(output)
-                result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC","-i",filepath,"-o",output])
-                if result.returncode == 0:
-                    print("Finished",file,output)
-                    #os.remove(filepath)
-                    total = total + 1
+                #result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC","-i",filepath,"-o",output])
+                #if result.returncode == 0:
+                #    print("Finished",file,output)
+                #    #os.remove(filepath)
+                #    total = total + 1
             else:
                 print(file,"already exist removing the source")
                 #os.remove(filepath)
