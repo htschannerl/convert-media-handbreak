@@ -5,7 +5,7 @@ import logging
 def convert(srcpath,dstpath):
     files = os.listdir(srcpath)
     total = len(os.listdir(dstpath))
-    print(total)
+    print(os.listdir(dstpath))
     for file in files:
         filepath = srcpath + "/" + file
         if os.path.isfile(filepath):
