@@ -19,11 +19,11 @@ def convert(srcpath,dstpath):
                 result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC","-i",filepath,"-o",output])
                 if result.returncode == 0:
                     print("Finished",file,output)
-                    #os.remove(filepath)
+                    os.remove(filepath)
                     total = total + 1
             else:
                 print(file,"already exist removing the source")
-                #os.remove(filepath)
+                os.remove(filepath)
 
 
 if __name__ == '__main__':
