@@ -48,6 +48,11 @@ def renameFile(srcpath,dstpath):
     srcTotal = len(srcfiles)
     for srcfile in srcfiles:
         print(srcfile)
+
+    print("*********************************")
+
+    for dstfile in dstfiles:
+        print(dstfile)
     print(srcTotal,"of",dstTotal)
 
 if __name__ == '__main__':
