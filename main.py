@@ -46,7 +46,7 @@ def renameFile(srcpath,dstpath):
         if os.path.isfile(filepath):
             file = file.replace(".mp4","")
             #result = subprocess.run(["mv", filepath, dstpath + "/" + file + ".mp4"])
-            print(dstpath + "/" + file + ".mp4")
+            print(dstpath + "/" + file + "mp4")
             #if result.returncode == 0:
                 #print(dstpath + "/" + file + ".mp4")
 
