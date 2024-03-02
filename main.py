@@ -40,20 +40,16 @@ def moveFile(srcpath,dstpath):
 
 def renameFile(srcpath,dstpath):
     count = 1
-    files = os.listdir(srcpath)
-    files = sorted(files)
-    for file in files:
-        filepath = srcpath + "/" + file
-        if os.path.isfile(filepath):
-            epsode = str(count).zfill(5)
-            file = file.replace("S01" + epsode,"S01E" + epsode)
-            result = subprocess.run(["mv", filepath, dstpath + "/" + file])
-            if result.returncode == 0:
-                count = count + 1
-                print(dstpath + "/" + file)
+    srcfiles = os.listdir(srcpath)
+    dstfiles = os.listdir(dstpath)
+    srcfiles = sorted(srcfiles)
+    dstfiles = sorted(dstfiles)
+    dstTotal = len(dstfiles)
+    srcTotal = len(srcfiles)
+    print(srcTotal,"of",dstTotal)
 
 if __name__ == '__main__':
     #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
     #moveFile('/mnt/dados/DashCam/Converted', '/mnt/dados/DashCam/Converted/Front')
-    renameFile('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/Converted/Front')
+    renameFile('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
 
