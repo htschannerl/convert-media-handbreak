@@ -54,9 +54,10 @@ def renameFile(srcpath,dstpath):
         count = count + 1
 
     for srcfile in srcfiles:
+        count = 1
         srcfilename = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
         if srcfilename in dstfiles:
-            count = dstTotal + 1
+            count = count + 1
             print(srcfilename)
 
     print(count,"of",srcTotal,"of",dstTotal)
