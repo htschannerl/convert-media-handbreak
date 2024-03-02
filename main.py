@@ -51,7 +51,9 @@ def renameFile(srcpath,dstpath):
 
     print("*********************************")
 
-    for dstfile in dstfiles:
+    for idx, dstfile in dstfiles:
+        epsode = str(count).zfill(5)
+        dstfile = dstfile.replace(".S01E" + epsode + ".","")
         print(dstfile)
     print(srcTotal,"of",dstTotal)
 
