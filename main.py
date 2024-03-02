@@ -38,6 +38,18 @@ def moveFile(srcpath,dstpath):
                 count = count + 1
             print(file)
 
+def renameFile(srcpath,dstpath):
+    files = os.listdir(srcpath)
+    files = sorted(files)
+    for file in files:
+        filepath = srcpath + "/" + file
+        if os.path.isfile(filepath):
+            file = str.replace('.mp4','')
+            #result = subprocess.run(["mv", filepath, dstpath + "/" + file + ".mp4"])
+            print(dstpath + "/" + file + ".mp4")
+            #if result.returncode == 0:
+                #print(dstpath + "/" + file + ".mp4")
+
 if __name__ == '__main__':
     #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
     moveFile('/mnt/dados/DashCam/Converted', '/mnt/dados/DashCam/Converted/Front')
