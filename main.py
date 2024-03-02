@@ -46,6 +46,7 @@ def convertNew(srcpath,dstpath):
     dstfiles = sorted(dstfiles)
     dstTotal = len(dstfiles)
     srcTotal = len(srcfiles)
+    count = dstTotal + 1
 
     for dstfile in dstfiles:
         epsode = str(count).zfill(5)
@@ -54,7 +55,6 @@ def convertNew(srcpath,dstpath):
         count = count + 1
 
     for srcfile in srcfiles:
-        count = dstTotal + 1
         output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14]
         filepath = srcpath + "/" + srcfile
         if output + ".mp4" in dstfiles:
