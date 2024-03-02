@@ -59,7 +59,7 @@ def renameFile(srcpath,dstpath):
             count = dstTotal + 1
             print(srcfilename)
 
-    print(srcTotal,"of",dstTotal)
+    print(count,"of",srcTotal,"of",dstTotal)
 
 if __name__ == '__main__':
     #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
