@@ -55,6 +55,7 @@ def renameFile(srcpath,dstpath):
         epsode = str(count).zfill(5)
         dstfile = dstfile.replace(".S01E" + epsode + ".","")
         print(dstfile)
+        count = count + 1
     print(srcTotal,"of",dstTotal)
 
 if __name__ == '__main__':
