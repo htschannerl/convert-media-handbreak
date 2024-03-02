@@ -27,6 +27,7 @@ def convert(srcpath,dstpath):
 
 def moveFile(srcpath,dstpath):
     files = os.listdir(srcpath)
+    files = sorted(files)
     for file in files:
         filepath = srcpath + "/" + file
         if os.path.isfile(filepath):
