@@ -52,5 +52,6 @@ def renameFile(srcpath,dstpath):
 
 if __name__ == '__main__':
     #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
-    moveFile('/mnt/dados/DashCam/Converted', '/mnt/dados/DashCam/Converted/Front')
+    #moveFile('/mnt/dados/DashCam/Converted', '/mnt/dados/DashCam/Converted/Front')
+    renameFile('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/Converted/Front')
 
