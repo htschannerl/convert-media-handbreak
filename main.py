@@ -2,7 +2,7 @@ import os
 import subprocess
 import datetime
 import logging
-def convert(srcpath,dstpath):
+def convertOld(srcpath,dstpath):
     files = os.listdir(srcpath)
     total = len(os.listdir(dstpath))
     if total == 0:
@@ -38,7 +38,7 @@ def moveFile(srcpath,dstpath):
                 count = count + 1
             print(file)
 
-def renameFile(srcpath,dstpath):
+def convertNew(srcpath,dstpath):
     count = 1
     srcfiles = os.listdir(srcpath)
     dstfiles = os.listdir(dstpath)
@@ -54,18 +54,23 @@ def renameFile(srcpath,dstpath):
         count = count + 1
 
     for srcfile in srcfiles:
-        count = dstTotal
-        dstfilename = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14]
-        filepath = srcpath + "/" + dstfilename
-        if dstfilename + ".mp4" in dstfiles:
-            print("In",dstfilename)
+        count = dstTotal + 1
+        output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14]
+        filepath = srcpath + "/" + srcfile
+        if output + ".mp4" in dstfiles:
+            print(srcfile, "already exist removing the source")
+            os.remove(filepath)
         else:
-            print("Out", dstfilename)
-
-    print(count,"of",srcTotal,"of",dstTotal)
+            epsode = "S01E" + str(count).zfill(5)
+            output = dstpath + "/" + output + "." + epsode + ".mp4"
+            result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output])
+            if result.returncode == 0:
+                count = count + 1
+                print("Finished", srcfile, output)
+                os.remove(filepath)
 
 if __name__ == '__main__':
     #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
     #moveFile('/mnt/dados/DashCam/Converted', '/mnt/dados/DashCam/Converted/Front')
-    renameFile('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
+    convertNew('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
 
