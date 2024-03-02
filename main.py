@@ -53,10 +53,12 @@ def renameFile(srcpath,dstpath):
 
     for dstfile in dstfiles:
         epsode = str(count).zfill(5)
-        dstfile = dstfile.replace(".S01E" + epsode + ".","")
+        dstfile = dstfile.replace(".S01E" + epsode,"")
+        dstfiles[count - 1] = dstfile
         print(dstfile)
         count = count + 1
     print(srcTotal,"of",dstTotal)
+    print(dstfiles)
 
 if __name__ == '__main__':
     #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
