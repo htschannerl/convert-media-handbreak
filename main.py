@@ -47,8 +47,6 @@ def renameFile(srcpath,dstpath):
     dstTotal = len(dstfiles)
     srcTotal = len(srcfiles)
 
-    print(dstfiles)
-
     for dstfile in dstfiles:
         epsode = str(count).zfill(5)
         dstfile = dstfile.replace(".S01E" + epsode,"")
@@ -57,8 +55,9 @@ def renameFile(srcpath,dstpath):
 
     for srcfile in srcfiles:
         srcfilename = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
-        count = dstTotal + 1
-        print(srcfilename)
+        if srcfilename in dstfiles:
+            count = dstTotal + 1
+            print(srcfilename)
 
     print(srcTotal,"of",dstTotal)
 
