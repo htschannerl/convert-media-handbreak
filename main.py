@@ -39,15 +39,18 @@ def moveFile(srcpath,dstpath):
             print(file)
 
 def renameFile(srcpath,dstpath):
+    count = 1
     files = os.listdir(srcpath)
     files = sorted(files)
     for file in files:
         filepath = srcpath + "/" + file
         if os.path.isfile(filepath):
-            file = file.replace(".mp4","")
-            result = subprocess.run(["mv", filepath, dstpath + "/" + file + "mp4"])
+            epsode = str(count).zfill(5)
+            file = file.replace("S01" + epsode,"S01E" + epsode)
+            result = subprocess.run(["mv", filepath, dstpath + "/" + file])
             if result.returncode == 0:
-                print(dstpath + "/" + file + ".mp4")
+                count = count + 1
+                print(dstpath + "/" + file)
 
 if __name__ == '__main__':
     #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
