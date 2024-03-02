@@ -47,7 +47,7 @@ def renameFile(srcpath,dstpath):
     dstTotal = len(dstfiles)
     srcTotal = len(srcfiles)
 
-    print(srcfiles)
+    print(dstfiles)
 
     for dstfile in dstfiles:
         epsode = str(count).zfill(5)
@@ -58,7 +58,7 @@ def renameFile(srcpath,dstpath):
     for srcfile in srcfiles:
         print(srcfile)
 
-    print(srcfiles)
+    print(dstfiles)
     print(srcTotal,"of",dstTotal)
 
 if __name__ == '__main__':
