@@ -44,9 +44,8 @@ def convertNew(srcpath,dstpath):
     dstfiles = os.listdir(dstpath)
     srcfiles = sorted(srcfiles)
     dstfiles = sorted(dstfiles)
-    dstTotal = len(dstfiles)
+    dstTotal = len(dstfiles) + 1
     srcTotal = len(srcfiles)
-    count = dstTotal + 1
 
     for dstfile in dstfiles:
         epsode = str(count).zfill(5)
@@ -61,11 +60,11 @@ def convertNew(srcpath,dstpath):
             print(srcfile, "already exist removing the source")
             os.remove(filepath)
         else:
-            epsode = "S01E" + str(count).zfill(5)
+            epsode = "S01E" + str(dstTotal).zfill(5)
             output = dstpath + "/" + output + "." + epsode + ".mp4"
             result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output])
             if result.returncode == 0:
-                count = count + 1
+                dstTotal = dstTotal + 1
                 print("Finished", srcfile, output)
                 os.remove(filepath)
 
