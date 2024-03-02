@@ -46,6 +46,8 @@ def renameFile(srcpath,dstpath):
     dstfiles = sorted(dstfiles)
     dstTotal = len(dstfiles)
     srcTotal = len(srcfiles)
+    for srcfile in srcfiles:
+        print(srcfile)
     print(srcTotal,"of",dstTotal)
 
 if __name__ == '__main__':
