@@ -25,7 +25,17 @@ def convert(srcpath,dstpath):
                 print(file,"already exist removing the source")
                 os.remove(filepath)
 
+def moveFile(srcpath,dstpath):
+    files = os.listdir(srcpath)
+    for file in files:
+        filepath = srcpath + "/" + file
+        if os.path.isfile(filepath):
+            print(file)
+
+
+
 
 if __name__ == '__main__':
-    convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
+    #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
+    moveFile('/mnt/dados/DashCam/Converted', '/mnt/dados/DashCam/Converted/Front')
 
