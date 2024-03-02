@@ -26,15 +26,17 @@ def convert(srcpath,dstpath):
                 os.remove(filepath)
 
 def moveFile(srcpath,dstpath):
+    count = 1
     files = os.listdir(srcpath)
     files = sorted(files)
     for file in files:
         filepath = srcpath + "/" + file
         if os.path.isfile(filepath):
+            epsode = str(count).zfill(5)
+            result = subprocess.run(["mv", filepath, dstpath + "/" + file + ".S01" + epsode + "."])
+            if result.returncode == 0:
+                count = count + 1
             print(file)
-
-
-
 
 if __name__ == '__main__':
     #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
