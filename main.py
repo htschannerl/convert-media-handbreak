@@ -58,18 +58,41 @@ def convertNew(srcpath,dstpath):
         filepath = srcpath + "/" + srcfile
         if output + ".mp4" in dstfiles:
             print(srcfile, "already exist removing the source")
-            os.remove(filepath)
+            #os.remove(filepath)
         else:
             epsode = "S01E" + str(dstTotal).zfill(5)
             output = dstpath + "/" + output + "." + epsode + ".mp4"
-            result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
-            if result.returncode == 0:
-                dstTotal = dstTotal + 1
-                print("Finished", srcfile, output)
-                os.remove(filepath)
+            print(output)
+            #result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+            #if result.returncode == 0:
+            #    dstTotal = dstTotal + 1
+            #    print("Finished", srcfile, output)
+            #    os.remove(filepath)
+
+def rename(srcpath,dstpath):
+    count = 1
+    srcfiles = os.listdir(srcpath)
+    dstfiles = os.listdir(dstpath)
+    srcfiles = sorted(srcfiles)
+    dstfiles = sorted(dstfiles)
+    dstTotal = len(dstfiles)
+    srcTotal = len(srcfiles)
+
+    for srcfile in srcfiles:
+        filepath = srcpath + "/" + srcfile
+        if os.path.isfile(filepath):
+            print(srcfile[0:19])
+
+    print("*******************************")
+
+    for dstfile in dstfiles:
+        filepath = dstpath + "/" + dstfile
+        if os.path.isfile(filepath):
+            print(dstfile)
 
 if __name__ == '__main__':
     #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
     #moveFile('/mnt/dados/DashCam/Converted', '/mnt/dados/DashCam/Converted/Front')
     convertNew('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
+    #rename('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/Converted')
 
