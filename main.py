@@ -63,7 +63,7 @@ def convertNew(srcpath,dstpath):
             epsode = "S01E" + str(dstTotal).zfill(5)
             output = dstpath + "/" + output + "." + epsode + ".mp4"
             print("Converting",srcfile,"=>",output)
-            result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+            #result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
             if result.returncode == 0:
                 dstTotal = dstTotal + 1
                 print("Converted",srcfile,"=>",output)
