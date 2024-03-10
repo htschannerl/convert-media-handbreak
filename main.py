@@ -68,8 +68,8 @@ def convertNew(srcpath,dstpath):
                         logging.info("Converted " + srcfile + " => " + output)
                     #    os.remove(filepath)
                     else:
-                        logging.info("Error " + srcfile + " => " + output)
-                        logging.info(result.stderr)
+                        logging.error("Error " + srcfile + " => " + output)
+                        logging.error(result.stderr)
 
 def removeEpisode(srcpath,dtspath):
     srcfiles = os.listdir(srcpath)
