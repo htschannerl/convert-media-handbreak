@@ -49,7 +49,7 @@ def convertNew(srcpath,dstpath):
     srcTotal = len(srcfiles)
 
     for srcfile in srcfiles:
-        logging.info("Starting the number :" + str(count) + " of " + str(srcTotal))
+        logging.info("Starting the number: " + str(count) + " of " + str(srcTotal))
         if os.path.isfile(srcpath + "/" + srcfile):
             if len(srcfile) == 21:
                 output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
@@ -70,6 +70,7 @@ def convertNew(srcpath,dstpath):
                     else:
                         logging.error("Error " + srcfile + " => " + output)
                         logging.error(result.stderr)
+        count = count + 1
 
 def removeEpisode(srcpath,dtspath):
     srcfiles = os.listdir(srcpath)
