@@ -73,6 +73,17 @@ def convertNew(srcpath,dstpath):
             print("Converted",srcfile,"=>",output)
             #    os.remove(filepath)
 
+def removeEpisode(srcpath,dtspath):
+    srcfiles = os.listdir(srcpath)
+    srcfiles = sorted(srcfiles)
+
+    for srcfile in srcfiles:
+        srcfile = srcfile[0:19] + ".mp4"
+        print(srcfile)
+
+
+
+
 def rename(srcpath,dstpath):
     count = 1
     srcfiles = os.listdir(srcpath)
@@ -110,6 +121,7 @@ if __name__ == '__main__':
 
     #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
     #moveFile('/mnt/dados/DashCam/Converted', '/mnt/dados/DashCam/Converted/Front')
-    convertNew('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
+    #convertNew('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
+    removeEpisode('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
     #rename('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/Converted')
 
