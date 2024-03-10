@@ -45,25 +45,30 @@ def convertNew(srcpath,dstpath):
     dstfiles = os.listdir(dstpath)
     srcfiles = sorted(srcfiles)
     dstfiles = sorted(dstfiles)
-    dstTotal = len(dstfiles) + 1
+    dstTotal = len(dstfiles)
     srcTotal = len(srcfiles)
 
     for srcfile in srcfiles:
+        logging.info("Starting the number :" + str(count) + " of " + str(srcTotal))
         if os.path.isfile(srcpath + "/" + srcfile):
             if len(srcfile) == 21:
                 output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
                 filepath = srcpath + "/" + srcfile
                 if output in dstfiles:
                     print(srcfile, "already exist removing the source")
+                    logging.info(srcfile + " already exist removing the source. Removing it from the source")
                     #os.remove(filepath)
                 else:
                     output = dstpath + "/" + output
                     print("Converting",srcfile,"=>",output)
-                    result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+                    logging.info("Converting " + srcfile + " => " + output)
+                    result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL)
                     if result.returncode == 0:
-                        dstTotal = dstTotal + 1
                         print("Converted",srcfile,"=>",output)
+                        logging.info("Converted" + srcfile + " => " + output)
                     #    os.remove(filepath)
+                    else:
+                        logging.info(result.stderr)
 
 def removeEpisode(srcpath,dtspath):
     srcfiles = os.listdir(srcpath)
