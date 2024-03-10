@@ -48,24 +48,14 @@ def convertNew(srcpath,dstpath):
     dstTotal = len(dstfiles) + 1
     srcTotal = len(srcfiles)
 
-    for dstfile in dstfiles:
-        epsode = str(count).zfill(5)
-        dstfile = dstfile.replace(".S01E" + epsode,"")
-        dstfiles[count - 1] = dstfile
-        count = count + 1
-
-    logging.info(dstfiles)
-    logging.info(srcfiles)
-
     for srcfile in srcfiles:
-        output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14]
+        output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
         filepath = srcpath + "/" + srcfile
-        if output + ".mp4" in dstfiles:
+        if output in dstfiles:
             print(srcfile, "already exist removing the source")
             #os.remove(filepath)
         else:
-            epsode = "S01E" + str(dstTotal).zfill(5)
-            output = dstpath + "/" + output + "." + epsode + ".mp4"
+            output = dstpath + "/" + output
             print("Converting",srcfile,"=>",output)
             #result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
            # if result.returncode == 0:
@@ -124,7 +114,7 @@ if __name__ == '__main__':
 
     #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
     #moveFile('/mnt/dados/DashCam/Converted', '/mnt/dados/DashCam/Converted/Front')
-    #convertNew('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
-    removeEpisode('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/Converted/Front')
+    convertNew('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
+    #removeEpisode('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/Converted/Front')
     #rename('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/Converted')
 
