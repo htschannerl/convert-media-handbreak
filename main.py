@@ -49,20 +49,22 @@ def convertNew(srcpath,dstpath):
     srcTotal = len(srcfiles)
 
     for srcfile in srcfiles:
-        print(len(srcfile))
-        output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
-        filepath = srcpath + "/" + srcfile
-        if output in dstfiles:
-            print(srcfile, "already exist removing the source")
-            #os.remove(filepath)
-        else:
-            output = dstpath + "/" + output
-            print("Converting",srcfile,"=>",output)
-            #result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
-           # if result.returncode == 0:
-            dstTotal = dstTotal + 1
-            print("Converted",srcfile,"=>",output)
-            #    os.remove(filepath)
+        if os.path.isfile(srcpath + "/" + srcfile):
+            if len(srcfile) == 21:
+                print(len(srcfile))
+                output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
+                filepath = srcpath + "/" + srcfile
+                if output in dstfiles:
+                    print(srcfile, "already exist removing the source")
+                    #os.remove(filepath)
+                else:
+                    output = dstpath + "/" + output
+                    print("Converting",srcfile,"=>",output)
+                    #result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+                   # if result.returncode == 0:
+                    dstTotal = dstTotal + 1
+                    print("Converted",srcfile,"=>",output)
+                    #    os.remove(filepath)
 
 def removeEpisode(srcpath,dtspath):
     srcfiles = os.listdir(srcpath)
