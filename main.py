@@ -62,14 +62,14 @@ def convertNew(srcpath,dstpath):
                     output = dstpath + "/" + output
                     print("Converting",srcfile,"=>",output)
                     logging.info("Converting " + srcfile + " => " + output)
-                    result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+                    result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
                     if result.returncode == 0:
                         print("Converted",srcfile,"=>",output)
                         logging.info("Converted " + srcfile + " => " + output)
                     #    os.remove(filepath)
                     else:
                         logging.error("Error " + srcfile + " => " + output)
-                        logging.error(result.stderr)
+                        logging.error(result.stderr.read())
         count = count + 1
 
 def removeEpisode(srcpath,dtspath):
