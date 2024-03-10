@@ -78,9 +78,11 @@ def removeEpisode(srcpath,dtspath):
     srcfiles = sorted(srcfiles)
 
     for srcfile in srcfiles:
-        dstfile = srcfile[0:19] + ".mp4"
-        result = subprocess.run(["mv", srcpath + "/" + srcfile,dtspath + "/" + dstfile])
-        print("Moved from:",srcpath + "/" + srcfile,"To:",dtspath + "/" + dstfile)
+        if os.path.isfile(srcpath + "/" + srcfile):
+            dstfile = srcfile[0:19] + ".mp4"
+            result = subprocess.run(["mv", srcpath + "/" + srcfile,dtspath + "/" + dstfile])
+            if result.returncode == 0:
+                print("Moved from:",srcpath + "/" + srcfile,"To:",dtspath + "/" + dstfile)
 
 
 
