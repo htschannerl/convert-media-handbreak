@@ -65,9 +65,10 @@ def convertNew(srcpath,dstpath):
                     result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
                     if result.returncode == 0:
                         print("Converted",srcfile,"=>",output)
-                        logging.info("Converted" + srcfile + " => " + output)
+                        logging.info("Converted " + srcfile + " => " + output)
                     #    os.remove(filepath)
                     else:
+                        logging.info("Error " + srcfile + " => " + output)
                         logging.info(result.stderr)
 
 def removeEpisode(srcpath,dtspath):
