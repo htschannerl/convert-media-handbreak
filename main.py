@@ -69,7 +69,7 @@ def convertNew(srcpath,dstpath):
                     #    os.remove(filepath)
                     else:
                         logging.error("Error " + srcfile + " => " + output)
-                        logging.error(result.stderr.read())
+                        logging.error(result.stderr)
         count = count + 1
 
 def removeEpisode(srcpath,dtspath):
