@@ -2,6 +2,7 @@ import os
 import subprocess
 import datetime
 import logging
+import warnings
 def convertOld(srcpath,dstpath):
     files = os.listdir(srcpath)
     total = len(os.listdir(dstpath))
@@ -91,6 +92,19 @@ def rename(srcpath,dstpath):
             print(dstfile)
 
 if __name__ == '__main__':
+    warnings.filterwarnings('ignore')
+    moment = datetime.datetime.now().strftime('%Y-%m-%m-%H%M%S')
+    logdir = "./logs/"
+    if not os.path.isdir(logdir):
+        os.mkdir(logdir)
+    logname = logdir + moment + ".log"
+
+    logging.basicConfig(filename=logname,
+                        filemode='a',
+                        format='%(asctime)s,%(msecs)s %(levelname)s %(message)s',
+                        datefmt='%Y-%m-%d %H:%M:%S',
+                        level=logging.DEBUG)
+
     #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
     #moveFile('/mnt/dados/DashCam/Converted', '/mnt/dados/DashCam/Converted/Front')
     convertNew('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
