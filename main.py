@@ -54,6 +54,9 @@ def convertNew(srcpath,dstpath):
         dstfiles[count - 1] = dstfile
         count = count + 1
 
+    logging.info(dstfiles)
+    logging.info(srcfiles)
+
     for srcfile in srcfiles:
         output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14]
         filepath = srcpath + "/" + srcfile
