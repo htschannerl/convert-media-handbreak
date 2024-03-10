@@ -62,7 +62,7 @@ def convertNew(srcpath,dstpath):
                     output = dstpath + "/" + output
                     print("Converting",srcfile,"=>",output)
                     logging.info("Converting " + srcfile + " => " + output)
-                    result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL)
+                    result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
                     if result.returncode == 0:
                         print("Converted",srcfile,"=>",output)
                         logging.info("Converted" + srcfile + " => " + output)
