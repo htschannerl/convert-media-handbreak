@@ -70,6 +70,10 @@ def convertNew(srcpath,dstpath):
                     else:
                         logging.error("Error " + srcfile + " => " + output)
                         logging.error(result.stderr)
+            else:
+                logging.info("Skipped " + srcfile)
+                print("Skipped", srcfile)
+
         count = count + 1
 
 def removeEpisode(srcpath,dtspath):
