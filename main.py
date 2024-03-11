@@ -73,6 +73,9 @@ def convertNew(srcpath,dstpath):
             else:
                 logging.info("Skipped " + srcfile)
                 print("Skipped", srcfile)
+        else:
+            logging.info("Skipped " + srcfile)
+            print("Skipped", srcfile)
 
         count = count + 1
 
