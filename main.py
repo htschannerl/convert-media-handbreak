@@ -117,7 +117,7 @@ def rename(srcpath,dstpath):
 if __name__ == '__main__':
     warnings.filterwarnings('ignore')
     moment = datetime.datetime.now().strftime('%Y-%m-%d-%H%M%S')
-    logdir = "./logs/"
+    logdir = os.getcwd() + "/logs/"
     if not os.path.isdir(logdir):
         os.mkdir(logdir)
     logname = logdir + moment + ".log"
