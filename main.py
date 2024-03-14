@@ -115,7 +115,7 @@ def rename(srcpath,dstpath):
             print(dstfile)
 
 def test():
-    print(os.getcwd())
+    print(os.path.dirname(__file__))
 
 if __name__ == '__main__':
     warnings.filterwarnings('ignore')
