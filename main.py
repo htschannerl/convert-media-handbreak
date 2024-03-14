@@ -114,6 +114,9 @@ def rename(srcpath,dstpath):
         if os.path.isfile(filepath):
             print(dstfile)
 
+def test():
+    print(os.getcwd())
+
 if __name__ == '__main__':
     warnings.filterwarnings('ignore')
     moment = datetime.datetime.now().strftime('%Y-%m-%d-%H%M%S')
@@ -130,7 +133,8 @@ if __name__ == '__main__':
 
     #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
     #moveFile('/mnt/dados/DashCam/Converted', '/mnt/dados/DashCam/Converted/Front')
-    convertNew('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
+    #convertNew('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
     #removeEpisode('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/Converted/Front')
     #rename('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/Converted')
+    test()
 
