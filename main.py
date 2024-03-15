@@ -115,10 +115,13 @@ def rename(srcpath,dstpath):
         if os.path.isfile(filepath):
             print(dstfile)
 
+def test():
+    print(os.path.dirname(__file__))
+
 if __name__ == '__main__':
     warnings.filterwarnings('ignore')
     moment = datetime.datetime.now().strftime('%Y-%m-%d-%H%M%S')
-    logdir = "./logs/"
+    logdir = os.path.dirname(__file__) + "/logs/"
     if not os.path.isdir(logdir):
         os.mkdir(logdir)
     logname = logdir + moment + ".log"
@@ -134,4 +137,5 @@ if __name__ == '__main__':
     convertNew('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
     #removeEpisode('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/Converted/Front')
     #rename('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/Converted')
+    #test()
 
