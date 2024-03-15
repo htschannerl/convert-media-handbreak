@@ -57,7 +57,7 @@ def convertNew(srcpath,dstpath):
                 if output in dstfiles:
                     print(srcfile, "already exist removing the source")
                     logging.info(srcfile + " already exist removing the source. Removing it from the source")
-                    #os.remove(filepath)
+                    os.remove(filepath)
                 else:
                     output = dstpath + "/" + output
                     print("Converting",srcfile,"=>",output)
@@ -66,13 +66,14 @@ def convertNew(srcpath,dstpath):
                     if result.returncode == 0:
                         logging.info("Converted " + srcfile + " => " + output)
                         print("Converted",srcfile,"=>",output)
-                    #    os.remove(filepath)
+                        os.remove(filepath)
                     else:
                         logging.error("Error " + srcfile + " => " + output)
                         logging.error(result.stderr)
             else:
                 logging.info("Skipped " + srcfile)
                 print("Skipped", srcfile)
+                os.remove(srcpath + "/" + srcfile)
         else:
             logging.info("Skipped " + srcfile)
             print("Skipped", srcfile)
