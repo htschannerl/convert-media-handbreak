@@ -41,7 +41,6 @@ def moveFile(srcpath,dstpath):
 
 def convertNew(srcpath,dstpath,preset):
     my_env = os.environ.copy()
-    print(my_env)
     count = 1
     srcfiles = os.listdir(srcpath)
     dstfiles = os.listdir(dstpath)
