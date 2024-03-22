@@ -133,7 +133,7 @@ if __name__ == '__main__':
                         level=logging.DEBUG)
 
 
-    convertNew('/mnt/dados/DashCam/Origin/VIDEO_F', '/mnt/dados/DashCam/Converted/Front', "Very Fast 2160p60 4K HEVC")
+    convertNew('/mnt/dados/DashCam/Origin/VIDEO_F', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p60 4K")
     convertNew('/mnt/dados/DashCam/Origin/VIDEO_B', '/mnt/dados/DashCam/Converted/Back', "Very Fast 1080p30")
 
 
