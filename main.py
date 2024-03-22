@@ -40,6 +40,8 @@ def moveFile(srcpath,dstpath):
             print(file)
 
 def convertNew(srcpath,dstpath,preset):
+    my_env = os.environ.copy()
+    print(my_env)
     count = 1
     srcfiles = os.listdir(srcpath)
     dstfiles = os.listdir(dstpath)
@@ -62,7 +64,7 @@ def convertNew(srcpath,dstpath,preset):
                     output = dstpath + "/" + output
                     print("Converting",srcfile,"=>",output)
                     logging.info("Converting " + srcfile + " => " + output)
-                    result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", preset, "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
+                    result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", preset, "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=my_env)
                     if result.returncode == 0:
                         logging.info("Converted " + srcfile + " => " + output)
                         print("Converted",srcfile,"=>",output)
@@ -116,7 +118,8 @@ def rename(srcpath,dstpath):
             print(dstfile)
 
 def test():
-    print(os.path.dirname(__file__))
+    my_env = os.environ.copy()
+    print(my_env)
 
 if __name__ == '__main__':
     warnings.filterwarnings('ignore')
@@ -135,5 +138,6 @@ if __name__ == '__main__':
 
     convertNew('/mnt/dados/DashCam/Origin/VIDEO_F', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p60 4K")
     convertNew('/mnt/dados/DashCam/Origin/VIDEO_B', '/mnt/dados/DashCam/Converted/Back', "Very Fast 1080p30")
+    #test()
 
 
