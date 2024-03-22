@@ -39,7 +39,7 @@ def moveFile(srcpath,dstpath):
                 count = count + 1
             print(file)
 
-def convertNew(srcpath,dstpath):
+def convertNew(srcpath,dstpath,preset):
     count = 1
     srcfiles = os.listdir(srcpath)
     dstfiles = os.listdir(dstpath)
@@ -62,7 +62,7 @@ def convertNew(srcpath,dstpath):
                     output = dstpath + "/" + output
                     print("Converting",srcfile,"=>",output)
                     logging.info("Converting " + srcfile + " => " + output)
-                    result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC", "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
+                    result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", preset, "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
                     if result.returncode == 0:
                         logging.info("Converted " + srcfile + " => " + output)
                         print("Converted",srcfile,"=>",output)
@@ -132,10 +132,8 @@ if __name__ == '__main__':
                         datefmt='%Y-%m-%d %H:%M:%S',
                         level=logging.DEBUG)
 
-    #convert('/mnt/dados/DashCam/Origin','/mnt/dados/DashCam/Converted')
-    #moveFile('/mnt/dados/DashCam/Converted', '/mnt/dados/DashCam/Converted/Front')
-    convertNew('/mnt/dados/DashCam/Origin', '/mnt/dados/DashCam/Converted/Front')
-    #removeEpisode('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/Converted/Front')
-    #rename('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/Converted')
-    #test()
+
+    #convertNew('/mnt/dados/DashCam/Origin/VIDEO_F', '/mnt/dados/DashCam/Converted/Front', "Very Fast 2160p60 4K HEVC")
+    convertNew('/mnt/dados/DashCam/Origin/VIDEO_B', '/mnt/dados/DashCam/Converted/Back', "Very Fast 1080p30")
+
 
