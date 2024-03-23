@@ -81,6 +81,44 @@ def convertNew(srcpath,dstpath,preset):
 
         count = count + 1
 
+
+def archive(srcpath,dstpath,preset):
+    my_env = os.environ.copy()
+    count = 1
+    srcfiles = os.listdir(srcpath)
+    dstfiles = os.listdir(dstpath)
+    srcfiles = sorted(srcfiles)
+    dstfiles = sorted(dstfiles)
+    dstTotal = len(dstfiles)
+    srcTotal = len(srcfiles)
+
+    for srcfile in srcfiles:
+        logging.info("Starting the number: " + str(count) + " of " + str(srcTotal))
+        filepath = srcpath + "/" + srcfile
+        if os.path.isfile(filepath):
+            output = srcfile
+            if output in dstfiles:
+                print(srcfile, "already exist removing the source")
+                logging.info(srcfile + " already exist removing the source. Removing it from the source")
+                #os.remove(filepath)
+            else:
+                output = dstpath + "/" + output
+                print("Converting",srcfile,"=>",output)
+                logging.info("Converting " + srcfile + " => " + output)
+                result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", preset, "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=my_env)
+                if result.returncode == 0:
+                    logging.info("Converted " + srcfile + " => " + output)
+                    print("Converted",srcfile,"=>",output)
+                    #os.remove(filepath)
+                else:
+                    logging.error("Error " + srcfile + " => " + output)
+                    logging.error(result.stderr)
+        else:
+            logging.info("Skipped is a dir " + srcfile)
+            print("Skipped is a dir", srcfile)
+
+        count = count + 1
+
 def removeEpisode(srcpath,dtspath):
     srcfiles = os.listdir(srcpath)
     srcfiles = sorted(srcfiles)
@@ -135,8 +173,9 @@ if __name__ == '__main__':
                         level=logging.DEBUG)
 
 
-    convertNew('/mnt/dados/DashCam/Origin/VIDEO_F', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p 4K")
-    convertNew('/mnt/dados/DashCam/Origin/VIDEO_B', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p")
+    #convertNew('/mnt/dados/DashCam/Origin/VIDEO_F', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p 4K")
+    #convertNew('/mnt/dados/DashCam/Origin/VIDEO_B', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p")
+    archive('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/archive/Front', "H.265 QSV 2160p 4K")
     #test()
 
 
