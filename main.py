@@ -173,9 +173,9 @@ if __name__ == '__main__':
                         level=logging.DEBUG)
 
 
-    #convertNew('/mnt/dados/DashCam/Origin/VIDEO_F', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p 4K")
-    #convertNew('/mnt/dados/DashCam/Origin/VIDEO_B', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p")
-    archive('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/archive/Front', "H.265 QSV 2160p 4K")
+    convertNew('/mnt/dados/DashCam/Origin/VIDEO_F', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p 4K")
+    convertNew('/mnt/dados/DashCam/Origin/VIDEO_B', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p")
+    #archive('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/archive/Front', "H.265 QSV 2160p 4K")
     #test()
 
 
