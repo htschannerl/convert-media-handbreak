@@ -48,7 +48,7 @@ def convertNew(srcpath,dstpath,preset):
     srcfiles = sorted(srcfiles)
     dstfiles = sorted(dstfiles)
     srcTotal = len(srcfiles)
-    df = pd.DataFrame(columns=['srcfile','dstfile','srcsize','dstsize'])
+    df = pd.read_excel(os.path.dirname(__file__) + "/report.xlsx")
     df = df.set_index('srcfile')
 
     for srcfile in srcfiles:
@@ -62,7 +62,6 @@ def convertNew(srcpath,dstpath,preset):
                     dststat = os.stat(dstpath + "/" + output)
                     data = [output, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2)]
                     df.loc[srcfile] = data
-                    print(df)
                     print(srcfile, "already exist removing the source",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
                     logging.info(srcfile + " already exist removing the source. Removing it from the source")
                     #os.remove(filepath)
