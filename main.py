@@ -94,7 +94,7 @@ def convertNew(srcpath,dstpath,preset):
 
         count = count + 1
 
-    print(df)
+    df.to_excel(os.path.dirname(__file__) + "/report.xlsx",index=True)
 
 
 def archive(srcpath,dstpath,preset):
