@@ -49,7 +49,7 @@ def convertNew(srcpath,dstpath,preset):
     dstfiles = sorted(dstfiles)
     srcTotal = len(srcfiles)
     df = pd.DataFrame(columns=('srcfile','dtsfile','srcsize','dtrsize'))
-    df = df.set_index('srcfile')
+    df.set_index('srcfile')
 
     for srcfile in srcfiles:
         logging.info("Starting the number: " + str(count) + " of " + str(srcTotal))
