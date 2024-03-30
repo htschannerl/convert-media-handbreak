@@ -62,9 +62,8 @@ def convertNew(srcpath,dstpath,preset):
                     dststat = os.stat(dstpath + "/" + output)
                     data = [{"srcfile": srcfile, "dstfile": output, "srcsize": round(srcstat.st_size / (1024 * 1024),2), "dstsize": round(dststat.st_size / (1024 * 1024),2)}]
                     row = pd.json_normalize(data)
-                    print(data)
-                    print(row)
-                    df[srcfile] = row
+                    row = row.set_index('srcfile')
+                    df = df.append(row)
                     print(srcfile, "already exist removing the source",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
                     logging.info(srcfile + " already exist removing the source. Removing it from the source")
                     #os.remove(filepath)
@@ -77,9 +76,8 @@ def convertNew(srcpath,dstpath,preset):
                         dststat = os.stat(dstpath + "/" + output)
                         data = [{"srcfile": srcfile, "dstfile": output, "srcsize": round(srcstat.st_size / (1024 * 1024),2), "dstsize": round(dststat.st_size / (1024 * 1024),2)}]
                         row = pd.json_normalize(data)
-                        print(data)
-                        print(row)
-                        df[srcfile] = row
+                        row = row.set_index('srcfile')
+                        df = df.append(row)
                         logging.info("Converted " + srcfile + " => " + output)
                         print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
                         #os.remove(filepath)
