@@ -60,7 +60,8 @@ def convertNew(srcpath,dstpath,preset):
                 srcstat = os.stat(filepath)
                 if output in dstfiles:
                     dststat = os.stat(dstpath + "/" + output)
-                    df[srcfile] = (output, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2))
+                    row = '"srcfile": ' + output + ', "dtsfile": ' + str(round(srcstat.st_size / (1024 * 1024),2)) + ', "dtrsize": ' + str(round(dststat.st_size / (1024 * 1024),2)) + ''
+                    df[srcfile] = row
                     print(srcfile, "already exist removing the source",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
                     logging.info(srcfile + " already exist removing the source. Removing it from the source")
                     #os.remove(filepath)
@@ -71,7 +72,8 @@ def convertNew(srcpath,dstpath,preset):
                     result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", preset, "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=my_env)
                     if result.returncode == 0:
                         dststat = os.stat(dstpath + "/" + output)
-                        df[srcfile] = (output, round(srcstat.st_size / (1024 * 1024), 2), round(dststat.st_size / (1024 * 1024), 2))
+                        row = '"srcfile": ' + output + ', "dtsfile": ' + str(round(srcstat.st_size / (1024 * 1024), 2)) + ', "dtrsize": ' + str(round(dststat.st_size / (1024 * 1024), 2)) + ''
+                        df[srcfile] = row
                         logging.info("Converted " + srcfile + " => " + output)
                         print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
                         #os.remove(filepath)
