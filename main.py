@@ -46,7 +46,6 @@ def convertNew(srcpath,dstpath,preset):
     dstfiles = os.listdir(dstpath)
     srcfiles = sorted(srcfiles)
     dstfiles = sorted(dstfiles)
-    dstTotal = len(dstfiles)
     srcTotal = len(srcfiles)
 
     for srcfile in srcfiles:
@@ -55,8 +54,10 @@ def convertNew(srcpath,dstpath,preset):
             if len(srcfile) > 21:
                 output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
                 filepath = srcpath + "/" + srcfile
+                srcstat = os.stat(filepath)
                 if output in dstfiles:
-                    print(srcfile, "already exist removing the source")
+                    dststat = os.stat(dstpath + "/" + output)
+                    print(srcfile, "already exist removing the source",str(srcstat.st_size / (1024 * 1024)),"-",str(dststat.st_size / (1024 * 1024)))
                     logging.info(srcfile + " already exist removing the source. Removing it from the source")
                     #os.remove(filepath)
                 else:
@@ -65,8 +66,9 @@ def convertNew(srcpath,dstpath,preset):
                     logging.info("Converting " + srcfile + " => " + output)
                     result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", preset, "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=my_env)
                     if result.returncode == 0:
+                        dststat = os.stat(dstpath + "/" + output)
                         logging.info("Converted " + srcfile + " => " + output)
-                        print("Converted",srcfile,"=>",output)
+                        print("Converted",srcfile,"=>",output,"-",str(srcstat.st_size / (1024 * 1024)),"-",str(dststat.st_size / (1024 * 1024)))
                         #os.remove(filepath)
                     else:
                         logging.error("Error " + srcfile + " => " + output)
