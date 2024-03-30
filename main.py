@@ -48,7 +48,8 @@ def convertNew(srcpath,dstpath,preset):
     srcfiles = sorted(srcfiles)
     dstfiles = sorted(dstfiles)
     srcTotal = len(srcfiles)
-    df = pd.read_excel(os.path.dirname(__file__) + "/report.xlsx")
+    report = "/mnt/dados/DashCam/report.xlsx"
+    df = pd.read_excel(report)
     df = df.set_index('srcfile')
 
     for srcfile in srcfiles:
@@ -91,7 +92,7 @@ def convertNew(srcpath,dstpath,preset):
 
         count = count + 1
 
-    df.to_excel(os.path.dirname(__file__) + "/report.xlsx",index=True)
+    df.to_excel(report,index=True)
 
 
 def archive(srcpath,dstpath,preset):
