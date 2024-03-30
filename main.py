@@ -62,6 +62,7 @@ def convertNew(srcpath,dstpath,preset):
                     dststat = os.stat(dstpath + "/" + output)
                     data = [output, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2)]
                     df.loc[srcfile] = data
+                    print(df)
                     print(srcfile, "already exist removing the source",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
                     logging.info(srcfile + " already exist removing the source. Removing it from the source")
                     #os.remove(filepath)
@@ -72,8 +73,7 @@ def convertNew(srcpath,dstpath,preset):
                     result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", preset, "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=my_env)
                     if result.returncode == 0:
                         dststat = os.stat(dstpath + "/" + output)
-                        data = [output, round(srcstat.st_size / (1024 * 1024), 2),
-                                round(dststat.st_size / (1024 * 1024), 2)]
+                        data = [output, round(srcstat.st_size / (1024 * 1024), 2), round(dststat.st_size / (1024 * 1024), 2)]
                         df.loc[srcfile] = data
                         logging.info("Converted " + srcfile + " => " + output)
                         print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
