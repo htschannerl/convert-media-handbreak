@@ -48,7 +48,7 @@ def convertNew(srcpath,dstpath,preset):
     srcfiles = sorted(srcfiles)
     dstfiles = sorted(dstfiles)
     srcTotal = len(srcfiles)
-    df = pd.DataFrame(columns=['srcfile','dtsfile','srcsize','dtrsize'])
+    df = pd.DataFrame(columns=['srcfile','dstfile','srcsize','dstsize'])
     df = df.set_index('srcfile')
 
     for srcfile in srcfiles:
@@ -60,10 +60,10 @@ def convertNew(srcpath,dstpath,preset):
                 srcstat = os.stat(filepath)
                 if output in dstfiles:
                     dststat = os.stat(dstpath + "/" + output)
-                    data = [{"dtsfile": output, "dtsfile": round(srcstat.st_size / (1024 * 1024),2), "dtrsize": round(dststat.st_size / (1024 * 1024),2)}]
+                    data = [{"dstfile": output, "srcsize": round(srcstat.st_size / (1024 * 1024),2), "dstsize": round(dststat.st_size / (1024 * 1024),2)}]
                     row = pd.json_normalize(data)
                     print(data,row)
-                    #df[srcfile] = row
+                    df[srcfile] = row
                     print(srcfile, "already exist removing the source",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
                     logging.info(srcfile + " already exist removing the source. Removing it from the source")
                     #os.remove(filepath)
@@ -74,10 +74,10 @@ def convertNew(srcpath,dstpath,preset):
                     result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", preset, "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=my_env)
                     if result.returncode == 0:
                         dststat = os.stat(dstpath + "/" + output)
-                        data = [{"dtsfile": output, "dtsfile": round(srcstat.st_size / (1024 * 1024),2), "dtrsize": round(dststat.st_size / (1024 * 1024),2)}]
+                        data = [{"dstfile": output, "srcsize": round(srcstat.st_size / (1024 * 1024),2), "dstsize": round(dststat.st_size / (1024 * 1024),2)}]
                         row = pd.json_normalize(data)
                         print(data,row)
-                        #df[srcfile] = row
+                        df[srcfile] = row
                         logging.info("Converted " + srcfile + " => " + output)
                         print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
                         #os.remove(filepath)
