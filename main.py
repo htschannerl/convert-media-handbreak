@@ -52,7 +52,7 @@ def convertNew(srcpath,dstpath,preset):
     for srcfile in srcfiles:
         logging.info("Starting the number: " + str(count) + " of " + str(srcTotal))
         if os.path.isfile(srcpath + "/" + srcfile):
-            if len(srcfile) == 21:
+            if len(srcfile) > 21:
                 output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
                 filepath = srcpath + "/" + srcfile
                 if output in dstfiles:
