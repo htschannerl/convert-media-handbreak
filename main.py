@@ -57,7 +57,7 @@ def convertNew(srcpath,dstpath,preset):
                 srcstat = os.stat(filepath)
                 if output in dstfiles:
                     dststat = os.stat(dstpath + "/" + output)
-                    print(srcfile, "already exist removing the source",str(srcstat.st_size / (1024 * 1024)),"-",str(dststat.st_size / (1024 * 1024)))
+                    print(srcfile, "already exist removing the source",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
                     logging.info(srcfile + " already exist removing the source. Removing it from the source")
                     #os.remove(filepath)
                 else:
@@ -68,7 +68,7 @@ def convertNew(srcpath,dstpath,preset):
                     if result.returncode == 0:
                         dststat = os.stat(dstpath + "/" + output)
                         logging.info("Converted " + srcfile + " => " + output)
-                        print("Converted",srcfile,"=>",output,"-",str(srcstat.st_size / (1024 * 1024)),"-",str(dststat.st_size / (1024 * 1024)))
+                        print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
                         #os.remove(filepath)
                     else:
                         logging.error("Error " + srcfile + " => " + output)
