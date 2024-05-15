@@ -32,4 +32,4 @@ def updateLenFile(file):
 
     df.to_excel(file, index=True)
 
-updateLenFile("/mnt/dados/DashCam/report.xlsx")
+#updateLenFile("/mnt/dados/DashCam/report.xlsx")

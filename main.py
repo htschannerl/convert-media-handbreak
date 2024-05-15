@@ -4,6 +4,7 @@ import datetime
 import logging
 import warnings
 import pandas as pd
+import getVideoLen
 def convertOld(srcpath,dstpath):
     files = os.listdir(srcpath)
     total = len(os.listdir(dstpath))
@@ -74,10 +75,11 @@ def convertNew(srcpath,dstpath,preset):
                     result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", preset, "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=my_env)
                     if result.returncode == 0:
                         dststat = os.stat(output)
-                        data = [dstfile, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2)]
+                        lenVideo = getVideoLen.getVideoLen(output)
+                        data = [dstfile, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2),dstpath + "/",lenVideo[0],lenVideo[1]]
                         df.loc[srcfile] = data
                         logging.info("Converted " + srcfile + " => " + output)
-                        print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
+                        print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)),lenVideo[0],lenVideo[1])
                         #os.remove(filepath)
                     else:
                         logging.error("Error " + srcfile + " => " + output)
