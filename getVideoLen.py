@@ -27,8 +27,8 @@ def updateLenFile(file):
         dstfile = df.loc[index, 'dstfile']
         if os.path.isfile(path + "/" + dstfile):
             result = getVideoLen(path + "/" + dstfile)
-            df[index, 'seconds'] = result[0]
-            df[index, 'Len'] = result[1]
+            df.loc[index, 'seconds'] = result[0]
+            df.loc[index, 'Len'] = result[1]
 
     df.to_excel(file, index=True)
 
