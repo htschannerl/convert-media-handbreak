@@ -15,7 +15,6 @@ def getVideoLen(file):
     # calculate duration of the video
     seconds = round(frames / fps)
     video_time = datetime.timedelta(seconds=seconds)
-    print(video_time)
     result = [seconds, str(video_time)]
     return result
 
@@ -28,6 +27,9 @@ def updateLenFile(file):
         dstfile = df.loc[index, 'dstfile']
         if os.path.isfile(path + "/" + dstfile):
             result = getVideoLen(path + "/" + dstfile)
-            print(index,result)
+            df[index, 'seconds'] = result[0]
+            df[index, 'Len'] = result[1]
+
+    df.to_excel(file, index=True)
 
 updateLenFile("/mnt/dados/DashCam/report.xlsx")
