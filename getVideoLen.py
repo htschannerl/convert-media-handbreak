@@ -1,16 +1,31 @@
 # import module
 import cv2
 import datetime
+import pandas as pd
+import os
 
-# create video capture object
-data = cv2.VideoCapture('/mnt/dados/DashCam/Converted/Front/2024-05-14_07-57-48.mp4')
+def getVideoLen(file):
+    # create video capture object
+    data = cv2.VideoCapture(file)
 
-# count the number of frames
-frames = data.get(cv2.CAP_PROP_FRAME_COUNT)
-fps = data.get(cv2.CAP_PROP_FPS)
+    # count the number of frames
+    frames = data.get(cv2.CAP_PROP_FRAME_COUNT)
+    fps = data.get(cv2.CAP_PROP_FPS)
 
-# calculate duration of the video
-seconds = round(frames / fps)
-video_time = datetime.timedelta(seconds=seconds)
-print(f"duration in seconds: {seconds}")
-print(f"video time: {video_time}")
+    # calculate duration of the video
+    seconds = round(frames / fps)
+    video_time = datetime.timedelta(seconds=seconds)
+    result = [seconds,video_time]
+    return result
+
+def updateLenFile(file):
+    df = pd.read_excel(file)
+    df = df.set_index('srcfile')
+
+    for index, row in df.iterrows():
+        path = df.loc[index, 'Path']
+        dstfile = df.loc[index, 'dstfile']
+        if os.path.isfile(path + "/" + dstfile):
+            result = getVideoLen(path + "/" + dstfile)
+            print(index,result)
+
