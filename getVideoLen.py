@@ -15,7 +15,7 @@ def getVideoLen(file):
     # calculate duration of the video
     seconds = round(frames / fps)
     video_time = datetime.timedelta(seconds=seconds)
-    result = [seconds,video_time]
+    result = [seconds,datetime.timedelta(seconds=seconds)]
     return result
 
 def updateLenFile(file):
