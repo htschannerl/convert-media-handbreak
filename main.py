@@ -41,7 +41,7 @@ def moveFile(srcpath,dstpath):
                 count = count + 1
             print(file)
 
-def convertNew(srcpath,dstpath,preset):
+def convertNew(srcpath,dstpath,preset,cam):
     my_env = os.environ.copy()
     count = 1
     srcfiles = os.listdir(srcpath)
@@ -76,7 +76,7 @@ def convertNew(srcpath,dstpath,preset):
                     if result.returncode == 0:
                         dststat = os.stat(output)
                         lenVideo = getVideoLen.getVideoLen(output)
-                        data = [dstfile, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2),dstpath + "/",lenVideo[0],lenVideo[1]]
+                        data = [dstfile, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2), cam, dstpath + "/", lenVideo[0], lenVideo[1]]
                         df.loc[srcfile] = data
                         logging.info("Converted " + srcfile + " => " + output)
                         print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)),lenVideo[0],lenVideo[1])
@@ -188,10 +188,10 @@ if __name__ == '__main__':
                         level=logging.DEBUG)
 
 
-    convertNew('/mnt/dados/DashCam/Origin/VIDEO_F', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p 4K")
-    convertNew('/mnt/dados/DashCam/Origin/VIDEO_F_LOCK', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p 4K")
-    convertNew('/mnt/dados/DashCam/Origin/VIDEO_B', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p")
-    convertNew('/mnt/dados/DashCam/Origin/VIDEO_B_LOCK', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p")
+    convertNew('/mnt/dados/DashCam/Origin/VIDEO_F', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p 4K", "Front")
+    convertNew('/mnt/dados/DashCam/Origin/VIDEO_F_LOCK', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p 4K", "Front")
+    convertNew('/mnt/dados/DashCam/Origin/VIDEO_B', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p", "Back")
+    convertNew('/mnt/dados/DashCam/Origin/VIDEO_B_LOCK', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p", "Back")
     #archive('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/archive/Front', "H.265 QSV 2160p 4K")
     #test()
 
