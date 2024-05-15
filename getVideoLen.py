@@ -29,3 +29,4 @@ def updateLenFile(file):
             result = getVideoLen(path + "/" + dstfile)
             print(index,result)
 
+updateLenFile("/mnt/dados/DashCam/report.xlsx")
