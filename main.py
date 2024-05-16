@@ -94,7 +94,7 @@ def convertNew(srcpath,dstpath,preset,cam):
             print("Skipped", srcfile)
 
         count = count + 1
-
+    df.sort_index()
     df.to_excel(report,index=True)
 
 
