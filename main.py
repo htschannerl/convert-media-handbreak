@@ -62,7 +62,8 @@ def convertNew(srcpath,dstpath,preset,cam):
                 srcstat = os.stat(filepath)
                 if output in dstfiles:
                     dststat = os.stat(dstpath + "/" + output)
-                    data = [output, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2)]
+                    lenVideo = getVideoLen.getVideoLen(dstpath + "/" + output)
+                    data = [output, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2), cam, dstpath + "/", lenVideo[0], lenVideo[1]]
                     df.loc[srcfile] = data
                     print(srcfile, "already exist removing the source",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
                     logging.info(srcfile + " already exist removing the source. Removing it from the source")
@@ -76,7 +77,7 @@ def convertNew(srcpath,dstpath,preset,cam):
                     if result.returncode == 0:
                         dststat = os.stat(output)
                         lenVideo = getVideoLen.getVideoLen(output)
-                        data = [dstfile, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2)]
+                        data = [dstfile, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2), cam, dstpath + "/", lenVideo[0], lenVideo[1]]
                         df.loc[srcfile] = data
                         logging.info("Converted " + srcfile + " => " + output)
                         print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)),lenVideo[0],lenVideo[1])
