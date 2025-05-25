@@ -1,0 +1,7 @@
+pandas
+moviepy
+opencv-python
+ffmpeg-python
+openpyxl
+mutagen
+PyExifTool

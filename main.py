@@ -5,6 +5,7 @@ import logging
 import warnings
 import pandas as pd
 import getVideoLen
+import change_video_datetime
 def convertOld(srcpath,dstpath):
     files = os.listdir(srcpath)
     total = len(os.listdir(dstpath))
@@ -79,6 +80,7 @@ def convertNew(srcpath,dstpath,preset,cam):
                         lenVideo = getVideoLen.getVideoLen(output)
                         data = [dstfile, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2), cam, dstpath + "/", lenVideo[0], lenVideo[1]]
                         df.loc[srcfile] = data
+                        change_video_datetime.change_video_metadata(output,srcfile)
                         logging.info("Converted " + srcfile + " => " + output)
                         print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)),lenVideo[0],lenVideo[1])
                         #os.remove(filepath)
@@ -155,8 +157,6 @@ def rename(srcpath,dstpath):
     dstfiles = os.listdir(dstpath)
     srcfiles = sorted(srcfiles)
     dstfiles = sorted(dstfiles)
-    dstTotal = len(dstfiles)
-    srcTotal = len(srcfiles)
 
     for srcfile in srcfiles:
         filepath = srcpath + "/" + srcfile
@@ -193,6 +193,7 @@ if __name__ == '__main__':
     convertNew('/mnt/dados/DashCam/Origin/VIDEO_F_LOCK', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p 4K", "Front")
     convertNew('/mnt/dados/DashCam/Origin/VIDEO_B', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p", "Back")
     convertNew('/mnt/dados/DashCam/Origin/VIDEO_B_LOCK', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p", "Back")
+
     #archive('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/archive/Front', "H.265 QSV 2160p 4K")
     #test()
 
