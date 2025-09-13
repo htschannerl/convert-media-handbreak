@@ -32,7 +32,6 @@ class main:
 
         if args.action == "convert":
             for convert in config["convert"]:
-                print(args.action)
                 self.convert(config["convert"][convert]["srcpath"], config["convert"][convert]["dstpath"],config["convert"][convert]["preset"], config["convert"][convert]["cam"])
 
         #
