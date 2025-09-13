@@ -1,0 +1,22 @@
+convert:
+  front:
+    srcpath: "/mnt/dados/DashCam/Origin/VIDEO_F"
+    dstpath: "/mnt/dados/DashCam/Converted/Front"
+    preset: "H.265 QSV 2160p 4K"
+    cam: "Front"
+  front_lock:
+    srcpath: "/mnt/dados/DashCam/Origin/VIDEO_F_LOCK"
+    dstpath: "/mnt/dados/DashCam/Converted/Front"
+    preset: "H.265 QSV 2160p 4K"
+    cam: "Front"
+  back:
+    srcpath: "/mnt/dados/DashCam/Origin/VIDEO_B"
+    dstpath: "/mnt/dados/DashCam/Converted/Back"
+    preset: "H.265 QSV 1080p"
+    cam: "Back"
+  back_lock:
+    srcpath: "/mnt/dados/DashCam/Origin/VIDEO_F"
+    dstpath: "/mnt/dados/DashCam/Converted/Back"
+    preset: "H.265 QSV 1080p"
+    cam: "Back"
+
