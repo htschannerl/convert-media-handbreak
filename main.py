@@ -32,11 +32,17 @@ class main:
 
         if args.action == "convert":
             for convert in config["convert"]:
-                self.convert(config["convert"][convert]["srcpath"], config["convert"][convert]["dstpath"],config["convert"][convert]["preset"], config["convert"][convert]["cam"])
+                src = config["convert"][convert]["srcpath"]
+                dst = config["convert"][convert]["dstpath"]
+                preset = config["convert"][convert]["preset"]
+                cam = config["convert"][convert]["cam"]
+                self.convert(src,dst,preset,cam)
 
-        #
-        # #archive('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/archive/Front', "H.265 QSV 2160p 4K")
-        # #test()
+        if args.action == "backup":
+            self.backup(config["backup"])
+
+    def backup(self,config):
+        print(config)
 
     def moveFile(self,srcpath,dstpath):
         count = 1
