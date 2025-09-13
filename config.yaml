@@ -1,3 +1,5 @@
+report: "/mnt/dados/DashCam/report.xlsx"
+
 convert:
   front:
     srcpath: "/mnt/dados/DashCam/Origin/VIDEO_F"
@@ -31,6 +33,4 @@ backup:
     srcpath: "/mnt/dados/DashCam/Converted/Back"
     dstpath: "/mnt/dados/DashCam/backup"
     limit: 10
-
-report: "/mnt/dados/DashCam/report.xlsx"
 
