@@ -8,6 +8,7 @@ import getVideoLen
 import change_video_datetime
 from include import job_parser
 import yaml
+import shutil
 
 class main:
     def __init__(self):
@@ -44,8 +45,27 @@ class main:
             self.backup(config["backup"],report)
 
     def backup(self,config,report):
+        my_env = os.environ.copy()
         df = pd.read_excel(report)
-        print(config)
+
+        for cam in config:
+            limit = config[cam]["limit"]
+            compress = config[cam]["compress"]
+            dst = config[cam]["dstpath"]
+            for index, row in df.iterrows():
+                if row["Cam"] == cam and int(row["seconds"]) <= limit:
+                    filename = row["dstfile"]
+                    src = f"{row['Path']}/{filename}"
+                    if compress:
+                        result = subprocess.run(["/usr/bin/7z", "a",f"{dst}/{cam}.7z",src,"-t7z","-m0=LZMA2","-mx=9","-md=1024m","-mfb=64","-ms=on","-mmt=on"],
+                                                stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=my_env)
+                        if result.returncode == 0:
+                            df.loc[index,"backup"] = "yes"
+
+        df = df.set_index('srcfile')
+        df = df.sort_index()
+        df.to_excel(report, index=True)
+
 
     def moveFile(self,srcpath,dstpath):
         count = 1

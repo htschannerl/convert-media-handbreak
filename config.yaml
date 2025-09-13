@@ -24,12 +24,12 @@ convert:
 
 backup:
   Front:
-    Compress: True
+    compress: True
     srcpath: "/mnt/dados/DashCam/Converted/Front"
     dstpath: "/mnt/dados/DashCam/backup"
     limit: 10
   Back:
-    Compress: True
+    compress: True
     srcpath: "/mnt/dados/DashCam/Converted/Back"
     dstpath: "/mnt/dados/DashCam/backup"
     limit: 10
