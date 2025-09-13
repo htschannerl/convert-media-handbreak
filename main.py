@@ -56,12 +56,17 @@ class main:
                 if row["Cam"] == cam and int(row["seconds"]) <= limit:
                     filename = row["dstfile"]
                     src = f"{row['Path']}/{filename}"
-                    print(f"Compressing the file {src}")
-                    if compress:
-                        result = subprocess.run(["/usr/bin/7z", "a",f"{dst}/{cam}.7z",src,"-t7z","-m0=LZMA2","-mx=9","-md=1024m","-mfb=64","-ms=on","-mmt=on"],
-                                                stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=my_env)
-                        if result.returncode == 0:
-                            df.loc[index,"backup"] = "yes"
+                    backup = row["backup"]
+                    if os.path.isfile(src):
+                        print(f"Compressing the file {src}")
+                        if compress:
+                            result = subprocess.run(["/usr/bin/7z", "a",f"{dst}/{cam}.7z",src,"-t7z","-m0=LZMA2","-mx=9","-md=1024m","-mfb=64","-ms=on","-mmt=on"],
+                                                    stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=my_env)
+                            if result.returncode == 0:
+                                df.loc[index,"backup"] = "yes"
+                                os.remove(src)
+                    else:
+                        print(f"The file {src} is not in the folder and the status is {backup}")
 
         df = df.set_index('srcfile')
         df = df.sort_index()
