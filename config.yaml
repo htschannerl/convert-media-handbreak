@@ -20,3 +20,17 @@ convert:
     preset: "H.265 QSV 1080p"
     cam: "Back"
 
+backup:
+  Front:
+    Compress: True
+    srcpath: "/mnt/dados/DashCam/Converted/Front"
+    dstpath: "/mnt/dados/DashCam/backup"
+    limit: 10
+  Back:
+    Compress: True
+    srcpath: "/mnt/dados/DashCam/Converted/Back"
+    dstpath: "/mnt/dados/DashCam/backup"
+    limit: 10
+
+  report: "/mnt/dados/DashCam/report.xlsx"
+

@@ -36,7 +36,8 @@ class main:
                 dst = config["convert"][convert]["dstpath"]
                 preset = config["convert"][convert]["preset"]
                 cam = config["convert"][convert]["cam"]
-                self.convert(src,dst,preset,cam)
+                report = config["report"]
+                self.convert(src,dst,preset,cam,report)
 
         if args.action == "backup":
             self.backup(config["backup"])
@@ -57,7 +58,7 @@ class main:
                     count = count + 1
                 print(file)
 
-    def convert(self,srcpath,dstpath,preset,cam):
+    def convert(self,srcpath,dstpath,preset,cam,report):
         my_env = os.environ.copy()
         count = 1
         srcfiles = os.listdir(srcpath)
@@ -65,7 +66,6 @@ class main:
         srcfiles = sorted(srcfiles)
         dstfiles = sorted(dstfiles)
         srcTotal = len(srcfiles)
-        report = "/mnt/dados/DashCam/report.xlsx"
         df = pd.read_excel(report)
         df = df.set_index('srcfile')
 
