@@ -32,5 +32,5 @@ backup:
     dstpath: "/mnt/dados/DashCam/backup"
     limit: 10
 
-  report: "/mnt/dados/DashCam/report.xlsx"
+report: "/mnt/dados/DashCam/report.xlsx"
 
