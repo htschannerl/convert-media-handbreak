@@ -6,28 +6,6 @@ import warnings
 import pandas as pd
 import getVideoLen
 import change_video_datetime
-def convertOld(srcpath,dstpath):
-    files = os.listdir(srcpath)
-    total = len(os.listdir(dstpath))
-    if total == 0:
-        total = 1
-    for file in files:
-        filepath = srcpath + "/" + file
-        if os.path.isfile(filepath):
-            print("Starting", filepath)
-            #t = datetime.datetime(int(file[0:4]), int(file[4:6]), int(file[6:8]), int(file[8:10]), int(file[10:12]), int(file[12:14]))
-            #t = t.strftime('%a %d %B %Y, %H:%M:%S')
-            output = dstpath + "/" + file[0:4] + "-" + file[4:6] + "-" + file[6:8] + "_" + file[8:10] + "-" + file[10:12] + "-" + file[12:14] + ".mp4"
-            if not os.path.exists(output):
-                print(output)
-                result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", "Very Fast 2160p60 4K HEVC","-i",filepath,"-o",output])
-                if result.returncode == 0:
-                    print("Finished",file,output)
-                    os.remove(filepath)
-                    total = total + 1
-            else:
-                print(file,"already exist removing the source")
-                os.remove(filepath)
 
 def moveFile(srcpath,dstpath):
     count = 1
@@ -42,7 +20,7 @@ def moveFile(srcpath,dstpath):
                 count = count + 1
             print(file)
 
-def convertNew(srcpath,dstpath,preset,cam):
+def convert(srcpath,dstpath,preset,cam):
     my_env = os.environ.copy()
     count = 1
     srcfiles = os.listdir(srcpath)
@@ -189,10 +167,10 @@ if __name__ == '__main__':
                         level=logging.DEBUG)
 
 
-    convertNew('/mnt/dados/DashCam/Origin/VIDEO_F', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p 4K", "Front")
-    convertNew('/mnt/dados/DashCam/Origin/VIDEO_F_LOCK', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p 4K", "Front")
-    convertNew('/mnt/dados/DashCam/Origin/VIDEO_B', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p", "Back")
-    convertNew('/mnt/dados/DashCam/Origin/VIDEO_B_LOCK', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p", "Back")
+    convert('/mnt/dados/DashCam/Origin/VIDEO_F', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p 4K", "Front")
+    convert('/mnt/dados/DashCam/Origin/VIDEO_F_LOCK', '/mnt/dados/DashCam/Converted/Front', "H.265 QSV 2160p 4K", "Front")
+    convert('/mnt/dados/DashCam/Origin/VIDEO_B', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p", "Back")
+    convert('/mnt/dados/DashCam/Origin/VIDEO_B_LOCK', '/mnt/dados/DashCam/Converted/Back', "H.265 QSV 1080p", "Back")
 
     #archive('/mnt/dados/DashCam/Converted/Front', '/mnt/dados/DashCam/archive/Front', "H.265 QSV 2160p 4K")
     #test()
