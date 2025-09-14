@@ -15,7 +15,7 @@ class main:
         args = job_parser.parse_arguments()
 
         # Load YAML file
-        with open("config.yaml", "r") as f:
+        with open(f"{os.path.dirname(__file__)}/config.yaml", "r") as f:
             config = yaml.safe_load(f)
 
         warnings.filterwarnings('ignore')
