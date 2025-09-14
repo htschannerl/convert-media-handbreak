@@ -27,10 +27,10 @@ backup:
     compress: True
     srcpath: "/mnt/dados/DashCam/Converted/Front"
     dstpath: "/mnt/dados/DashCam/backup"
-    limit: 20
+    limit: 30
   Back:
     compress: True
     srcpath: "/mnt/dados/DashCam/Converted/Back"
     dstpath: "/mnt/dados/DashCam/backup"
-    limit: 20
+    limit: 30
 
