@@ -23,7 +23,7 @@ class main:
         logdir = os.path.dirname(__file__) + "/logs/"
         if not os.path.isdir(logdir):
             os.mkdir(logdir)
-        logname = logdir + moment + ".log"
+        logname = f"{logdir}{moment}-{args.action}.log"
 
         logging.basicConfig(filename=logname,
                             filemode='a',
