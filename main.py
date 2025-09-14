@@ -67,6 +67,7 @@ class main:
                                 df.loc[index,"backup"] = "yes"
                                 os.remove(src)
                     else:
+                        df.loc[index, "backup"] = "yes"
                         logging.info(f"The file {src} is not in the folder and the status is {backup}")
                         print(f"The file {src} is not in the folder and the status is {backup}")
 
