@@ -8,7 +8,7 @@ import getVideoLen
 import change_video_datetime
 from include import job_parser
 import yaml
-from include.report import report
+from include.save_report import save_report
 
 class main:
     def __init__(self):
@@ -144,9 +144,8 @@ class main:
             count = count + 1
         df = df.sort_index()
         df.to_excel(report,index=True)
-        report.insertReport(df)
-
-
+        saveReport = save_report()
+        saveReport.insertReport(df)
 
     def archive(self,srcpath,dstpath,preset):
         my_env = os.environ.copy()

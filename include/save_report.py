@@ -3,7 +3,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 
-class report:
+class save_report:
     def __init__(self):
         load_dotenv()
         self.username = os.getenv("dbuser")
