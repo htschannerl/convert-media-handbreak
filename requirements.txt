@@ -5,3 +5,5 @@ ffmpeg-python
 openpyxl
 mutagen
 PyExifTool
+sqlalchemy
+dotenv
