@@ -18,14 +18,14 @@ class save_report:
         merge_sql = """
         MERGE INTO E400CAM tgt
         USING (SELECT :srcfile AS srcfile, :dstfile AS dstfile, :srcsize AS srcsize, :dstsize AS dstsize, :diff AS diff,
-                      :Cam AS Cam, :Path AS Path, :seconds AS seconds, :Len AS Len, :backup AS backup FROM dual) src
+                      :cam AS cam, :path AS path, :seconds AS seconds, :len AS len, :backup AS backup FROM dual) src
         ON (tgt.srcfile = src.srcfile)  -- adjust to your PK or unique key
         WHEN MATCHED THEN
-            UPDATE SET dstfile = src.dstfile, srcsize = src.srcsize, dstsize = src.dstsize, diff = src.diff, Cam = src.Cam,
-                       Path = src.Path, seconds = src.seconds, Len = src.Len, backup = src.backup
+            UPDATE SET dstfile = src.dstfile, srcsize = src.srcsize, dstsize = src.dstsize, diff = src.diff, cam = src.cam,
+                       path = src.path, seconds = src.seconds, len = src.len, backup = src.backup
         WHEN NOT MATCHED THEN
-            INSERT (srcfile, dstfile, srcsize, dstsize, diff, Cam, Path, seconds, Len, backup)
-            VALUES (src.srcfile, src.dstfile, src.srcsize, src.dstsize, src.diff, src.Cam, src.Path, src.seconds, src.Len, src.backup)
+            INSERT (srcfile, dstfile, srcsize, dstsize, diff, cam, path, seconds, len, backup)
+            VALUES (src.srcfile, src.dstfile, src.srcsize, src.dstsize, src.diff, src.cam, src.path, src.seconds, src.len, src.backup)
         """
 
         try:
