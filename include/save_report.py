@@ -17,7 +17,7 @@ class save_report:
 
         engine = create_engine(connection_string)
         try:
-            df.to_sql('E400CAM', con=engine, if_exists='append', index=False)
+            df.to_sql('E400CAM', con=engine, if_exists='replace', index=False)
             print(f"Report inserted with success")
             return True
         except Exception as e:
