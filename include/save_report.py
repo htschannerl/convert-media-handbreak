@@ -1,6 +1,6 @@
 import os
-import pandas as pd
-from sqlalchemy import create_engine
+import oracledb
+from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
 
 class save_report:
@@ -13,11 +13,26 @@ class save_report:
         self.service_name = os.getenv("dbservice")
 
     def insertReport(self,df):
-        connection_string = f"oracle+oracledb://{self.username}:{self.password}@{self.hostname}:{self.port}/?service_name={self.service_name}"
+        engine = create_engine(f'oracle+oracledb://{self.username}:{self.password}@{self.hostname}:{self.port}/?service_name={self.service_name}')
 
-        engine = create_engine(connection_string)
+        merge_sql = """
+        MERGE INTO E400CAM tgt
+        USING (SELECT :srcfile AS srcfile, :dstfile AS dstfile, :srcsize AS srcsize, :dstsize AS dstsize, :diff AS diff,
+                      :Cam AS Cam, :Path AS Path, :seconds AS seconds, :Len AS Len, :backup AS backup FROM dual) src
+        ON (tgt.srcfile = src.srcfile)  -- adjust to your PK or unique key
+        WHEN MATCHED THEN
+            UPDATE SET dstfile = src.dstfile, srcsize = src.srcsize, dstsize = src.dstsize, diff = src.diff, Cam = src.Cam,
+                       Path = src.Path, seconds = src.seconds, Len = src.Len, backup = src.backup
+        WHEN NOT MATCHED THEN
+            INSERT (srcfile, dstfile, srcsize, dstsize, diff, Cam, Path, seconds, Len, backup)
+            VALUES (src.srcfile, src.dstfile, src.srcsize, src.dstsize, src.diff, src.Cam, src.Path, src.seconds, src.Len, src.backup)
+        """
+
         try:
-            df.to_sql('E400CAM', con=engine, if_exists='replace', index=False)
+            with engine.begin() as conn:
+                for row in df.to_dict(orient='records'):
+                    conn.execute(text(merge_sql), **row)
+
             print(f"Report inserted with success")
             return True
         except Exception as e:
