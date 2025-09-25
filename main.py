@@ -145,7 +145,7 @@ class main:
         df = df.sort_index()
         df.to_excel(report,index=True)
         saveReport = save_report()
-        saveReport.insertReport(df)
+        saveReport.insertReport(df.reset_index())
 
     def archive(self,srcpath,dstpath,preset):
         my_env = os.environ.copy()
