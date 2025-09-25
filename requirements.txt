@@ -7,3 +7,4 @@ mutagen
 PyExifTool
 sqlalchemy
 dotenv
+oracledb

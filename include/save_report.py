@@ -13,7 +13,7 @@ class save_report:
         self.service_name = os.getenv("dbservice")
 
     def insertReport(self,df):
-        connection_string = f"oracle+cx_oracle://{self.username}:{self.password}@{self.hostname}:{self.port}/?service_name={self.service_name}"
+        connection_string = f"oracle+oracledb://{self.username}:{self.password}@{self.hostname}:{self.port}/?service_name={self.service_name}"
 
         engine = create_engine(connection_string)
         try:
@@ -21,5 +21,5 @@ class save_report:
             print(f"Report inserted with success")
             return True
         except Exception as e:
-            print(f"Error to insert")
+            print(f"Error to insert: {e}")
             return False
