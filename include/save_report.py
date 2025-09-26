@@ -32,7 +32,7 @@ class save_report:
             with engine.begin() as conn:
                 for row in df.to_dict(orient='records'):
                     print(row)
-                    conn.execute(text(merge_sql), **row)
+                    conn.execute(text(merge_sql), row)
 
             print(f"Report inserted with success")
             return True
