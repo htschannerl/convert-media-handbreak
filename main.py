@@ -105,12 +105,16 @@ class main:
             if os.path.isfile(srcpath + "/" + srcfile):
                 if len(srcfile) >= 21:
                     output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
+                    date_str = srcfile[0:14]
+                    date_value = pd.to_datetime(date_str, format="%Y%m%d%H%M%S")
                     filepath = srcpath + "/" + srcfile
                     srcstat = os.stat(filepath)
                     if output in dstfiles:
                         dststat = os.stat(dstpath + "/" + output)
                         lenVideo = getVideoLen.getVideoLen(dstpath + "/" + output)
-                        data = [output, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2), cam, dstpath + "/", lenVideo[0], lenVideo[1],"no"]
+                        data = [output, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),
+                                round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2),
+                                cam, dstpath + "/", lenVideo[0], lenVideo[1],"no",date_value]
                         df.loc[srcfile] = data
                         print(srcfile, "already exist removing the source",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
                         logging.info(srcfile + " already exist removing the source. Removing it from the source")
@@ -124,7 +128,9 @@ class main:
                         if result.returncode == 0:
                             dststat = os.stat(output)
                             lenVideo = getVideoLen.getVideoLen(output)
-                            data = [dstfile, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2), cam, dstpath + "/", lenVideo[0], lenVideo[1],"no"]
+                            data = [dstfile, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),
+                                    round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2),
+                                    cam, dstpath + "/", lenVideo[0], lenVideo[1],"no",date_value]
                             df.loc[srcfile] = data
                             change_video_datetime.change_video_metadata(output,srcfile)
                             logging.info("Converted " + srcfile + " => " + output)
