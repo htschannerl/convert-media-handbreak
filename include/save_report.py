@@ -22,15 +22,18 @@ class save_report:
         ON (tgt.srcfile = src.srcfile)
         WHEN MATCHED THEN
             UPDATE SET dstfile = src.dstfile, srcsize = src.srcsize, dstsize = src.dstsize, diff = src.diff, cam = src.cam,
-                       path = src.path, seconds = src.seconds, len = src.len, backup = src.backup, date = src."date"
+                       path = src.path, seconds = src.seconds, len = src.len, backup = src.backup, "date" = src."date"
         WHEN NOT MATCHED THEN
-            INSERT (srcfile, dstfile, srcsize, dstsize, diff, cam, path, seconds, len, backup, date)
+            INSERT (srcfile, dstfile, srcsize, dstsize, diff, cam, path, seconds, len, backup, "date")
             VALUES (src.srcfile, src.dstfile, src.srcsize, src.dstsize, src.diff, src.cam, src.path, src.seconds, src.len, src.backup, src."date")
         """
 
         try:
             with engine.begin() as conn:
+                # When converting the DataFrame row to a dict, ensure the key is 'date' not '"date"'
                 for row in df.to_dict(orient='records'):
+                    if '"date"' in row:
+                        row['date'] = row.pop('"date"')
                     conn.execute(text(merge_sql), row)
 
             print(f"Report inserted with success")
