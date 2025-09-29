@@ -103,46 +103,41 @@ class main:
         for srcfile in srcfiles:
             logging.info("Starting the number: " + str(count) + " of " + str(srcTotal))
             if os.path.isfile(srcpath + "/" + srcfile):
-                if len(srcfile) >= 21:
-                    output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
-                    date_str = srcfile[0:14]
-                    date_value = pd.to_datetime(date_str, format="%Y%m%d%H%M%S")
-                    filepath = srcpath + "/" + srcfile
-                    srcstat = os.stat(filepath)
-                    if output in dstfiles:
-                        dststat = os.stat(dstpath + "/" + output)
-                        lenVideo = getVideoLen.getVideoLen(dstpath + "/" + output)
-                        data = [output, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),
+                output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
+                date_str = srcfile[0:14]
+                date_value = pd.to_datetime(date_str, format="%Y%m%d%H%M%S")
+                filepath = srcpath + "/" + srcfile
+                srcstat = os.stat(filepath)
+                if output in dstfiles:
+                    dststat = os.stat(dstpath + "/" + output)
+                    lenVideo = getVideoLen.getVideoLen(dstpath + "/" + output)
+                    data = [output, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),
+                            round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2),
+                            cam, dstpath + "/", lenVideo[0], lenVideo[1],"no",date_value]
+                    df.loc[srcfile] = data
+                    print(srcfile, "already exist removing the source",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
+                    logging.info(srcfile + " already exist removing the source. Removing it from the source")
+                    #os.remove(filepath)
+                else:
+                    dstfile = output
+                    output = dstpath + "/" + output
+                    print("Converting",srcfile,"=>",output)
+                    logging.info("Converting " + srcfile + " => " + output)
+                    result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", preset, "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=my_env)
+                    if result.returncode == 0:
+                        dststat = os.stat(output)
+                        lenVideo = getVideoLen.getVideoLen(output)
+                        data = [dstfile, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),
                                 round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2),
                                 cam, dstpath + "/", lenVideo[0], lenVideo[1],"no",date_value]
                         df.loc[srcfile] = data
-                        print(srcfile, "already exist removing the source",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)))
-                        logging.info(srcfile + " already exist removing the source. Removing it from the source")
+                        change_video_datetime.change_video_metadata(output,srcfile)
+                        logging.info("Converted " + srcfile + " => " + output)
+                        print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)),lenVideo[0],lenVideo[1])
                         #os.remove(filepath)
                     else:
-                        dstfile = output
-                        output = dstpath + "/" + output
-                        print("Converting",srcfile,"=>",output)
-                        logging.info("Converting " + srcfile + " => " + output)
-                        result = subprocess.run(["/usr/bin/HandBrakeCLI", "-Z", preset, "-i", filepath, "-o", output],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=my_env)
-                        if result.returncode == 0:
-                            dststat = os.stat(output)
-                            lenVideo = getVideoLen.getVideoLen(output)
-                            data = [dstfile, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),
-                                    round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2),
-                                    cam, dstpath + "/", lenVideo[0], lenVideo[1],"no",date_value]
-                            df.loc[srcfile] = data
-                            change_video_datetime.change_video_metadata(output,srcfile)
-                            logging.info("Converted " + srcfile + " => " + output)
-                            print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)),lenVideo[0],lenVideo[1])
-                            #os.remove(filepath)
-                        else:
-                            logging.error("Error " + srcfile + " => " + output)
-                            logging.error(result.stderr)
-                else:
-                    logging.info("Skipped " + srcfile)
-                    print("Skipped", srcfile)
-                    #os.remove(srcpath + "/" + srcfile)
+                        logging.error("Error " + srcfile + " => " + output)
+                        logging.error(result.stderr)
             else:
                 logging.info("Skipped " + srcfile)
                 print("Skipped", srcfile)
