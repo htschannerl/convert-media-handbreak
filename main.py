@@ -103,7 +103,7 @@ class main:
         for srcfile in srcfiles:
             logging.info("Starting the number: " + str(count) + " of " + str(srcTotal))
             if os.path.isfile(srcpath + "/" + srcfile):
-                output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
+                output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mkv"
                 date_str = srcfile[0:14]
                 date_value = pd.to_datetime(date_str, format="%Y%m%d%H%M%S")
                 filepath = srcpath + "/" + srcfile
