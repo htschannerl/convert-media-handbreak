@@ -17,7 +17,7 @@ convert:
     preset: "Very Fast 1080p30"
     cam: "Back"
   back_lock:
-    srcpath: "/mnt/dados/DashCam/Origin/VIDEO_F"
+    srcpath: "/mnt/dados/DashCam/Origin/VIDEO_B_LOCK"
     dstpath: "/mnt/dados/DashCam/Converted/Back"
     preset: "Very Fast 1080p30"
     cam: "Back"
