@@ -125,7 +125,7 @@ class main:
                     logging.info("Converting " + srcfile + " => " + output)
                     #result = subprocess.run(["/usr/bin/HandBrakeCLI", "-i", filepath, "-o", output, "-e","x265","-q","28","--cfr"],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=my_env)
                     result = subprocess.run(
-                        ["/usr/bin/ffmpeg", "-init_hw_device", "qsv=hw","-filter_hw_device","hw","-i", filepath,"-c:v","hevc_qsv","-global_quality","28","-preset","medium", output],
+                        ["/usr/bin/ffmpeg", "-init_hw_device", "qsv=hw","-filter_hw_device","hw","-i", filepath,"-c:v","hevc_qsv","-global_quality","28","-preset","medium","-c:a","aac", output],
                         stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=my_env)
                     if result.returncode == 0:
                         dststat = os.stat(output)
