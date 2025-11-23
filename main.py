@@ -56,7 +56,7 @@ class main:
 
         # Format datetime for ffmpeg (YYYY-MM-DD HH:MM:SS)
         new_date = datetime(int(Y), int(m), int(d), int(H), int(M), int(S))
-        formatted_dt = new_date.strftime("%Y-%m-%dT%H:%M:%S")
+        formatted_dt = new_date.strftime("%Y-%m-%d %H:%M:%S")
 
         return formatted_dt
 
@@ -145,13 +145,13 @@ class main:
                         ["/usr/bin/ffmpeg", "-init_hw_device", "qsv=hw","-filter_hw_device","hw","-i", filepath,"-c:v","hevc_qsv","-global_quality","28","-preset","medium","-c:a","aac","-metadata",f"creation_time={formatted_dt}Z", output],
                         stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=my_env)
                     if result.returncode == 0:
-                        resultDate = subprocess.run(
-                            ["/usr/bin/mkvpropedit", output, "--set", f"date={formatted_dt}Z"],
-                            stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=my_env)
-                        if resultDate.returncode != 0:
-                            print("Error to chagne the date")
-                            logging.error(f"Error to change the date of the file {output}")
-                            logging.error(resultDate.stderr)
+                        #resultDate = subprocess.run(
+                        #    ["/usr/bin/mkvpropedit", output, "--set", f"date={formatted_dt}Z"],
+                        #    stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=my_env)
+                        #if resultDate.returncode != 0:
+                        #    print("Error to chagne the date")
+                        #    logging.error(f"Error to change the date of the file {output}")
+                        #    logging.error(resultDate.stderr)
 
                         dststat = os.stat(output)
                         lenVideo = getVideoLen.getVideoLen(output)
