@@ -146,7 +146,7 @@ class main:
                         stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=my_env)
                     if result.returncode == 0:
                         resultDate = subprocess.run(
-                            ["/usr/bin/mkvpropedit", output, "--set", f"date=\"{formatted_dt}Z\""],
+                            ["/usr/bin/mkvpropedit", output, "--set", f"date={formatted_dt}Z"],
                             stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=my_env)
                         if resultDate.returncode != 0:
                             print("Error to chagne the date")
