@@ -1,22 +1,29 @@
 # import module
+import logging
+
 import cv2
 import datetime
 import pandas as pd
 import os
 
 def getVideoLen(file):
-    # create video capture object
-    data = cv2.VideoCapture(file)
+    try:
+        # create video capture object
+        data = cv2.VideoCapture(file)
 
-    # count the number of frames
-    frames = data.get(cv2.CAP_PROP_FRAME_COUNT)
-    fps = data.get(cv2.CAP_PROP_FPS)
+        # count the number of frames
+        frames = data.get(cv2.CAP_PROP_FRAME_COUNT)
+        fps = data.get(cv2.CAP_PROP_FPS)
 
-    # calculate duration of the video
-    seconds = round(frames / fps)
-    video_time = datetime.timedelta(seconds=seconds)
-    result = [seconds, str(video_time)]
-    return result
+        # calculate duration of the video
+        seconds = round(frames / fps)
+        video_time = datetime.timedelta(seconds=seconds)
+        result = [seconds, str(video_time)]
+        return result
+    except Exception as e:
+        logging.error(f"Error on get video lenth of {file} - {e}")
+        result = [0, "00:00:00"]
+        return result
 
 def updateLenFile(file):
     df = pd.read_excel(file)
