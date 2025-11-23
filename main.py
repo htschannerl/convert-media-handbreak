@@ -44,6 +44,22 @@ class main:
             report = config["report"]
             self.backup(config["backup"],report)
 
+    def getDateFromFilename(self,new_datetime):
+        new_datetime = new_datetime.replace("-", "")
+        new_datetime = new_datetime.replace("_", "")
+        Y = new_datetime[0:4]
+        m = new_datetime[4:6]
+        d = new_datetime[6:8]
+        H = new_datetime[8:10]
+        M = new_datetime[10:12]
+        S = new_datetime[12:14]
+
+        # Format datetime for ffmpeg (YYYY-MM-DD HH:MM:SS)
+        new_date = datetime(int(Y), int(m), int(d), int(H), int(M), int(S))
+        formatted_dt = new_date.strftime("%Y:%m:%d %H:%M:%S")
+
+        return formatted_dt
+
     def backup(self,config,report):
         my_env = os.environ.copy()
         df = pd.read_excel(report)
@@ -123,9 +139,10 @@ class main:
                     output = dstpath + "/" + output
                     print("Converting",srcfile,"=>",output)
                     logging.info("Converting " + srcfile + " => " + output)
+                    formatted_dt = self.getDateFromFilename(srcfile)
                     #result = subprocess.run(["/usr/bin/HandBrakeCLI", "-i", filepath, "-o", output, "-e","x265","-q","28","--cfr"],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=my_env)
                     result = subprocess.run(
-                        ["/usr/bin/ffmpeg", "-init_hw_device", "qsv=hw","-filter_hw_device","hw","-i", filepath,"-c:v","hevc_qsv","-global_quality","28","-preset","medium","-c:a","aac", output],
+                        ["/usr/bin/ffmpeg", "-init_hw_device", "qsv=hw","-filter_hw_device","hw","-i", filepath,"-c:v","hevc_qsv","-global_quality","28","-preset","medium","-c:a","aac","-metadata",f"creation_time=\"{formatted_dt}Z\"", output],
                         stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=my_env)
                     if result.returncode == 0:
                         dststat = os.stat(output)
@@ -134,7 +151,7 @@ class main:
                                 round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2),
                                 cam, dstpath + "/", lenVideo[0], lenVideo[1],"no",date_value]
                         df.loc[srcfile] = data
-                        change_video_datetime.change_video_metadata(output,srcfile)
+                        #change_video_datetime.change_video_metadata(output,srcfile)
                         logging.info("Converted " + srcfile + " => " + output)
                         print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)),lenVideo[0],lenVideo[1])
                         #os.remove(filepath)
