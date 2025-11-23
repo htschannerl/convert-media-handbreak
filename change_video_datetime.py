@@ -21,6 +21,7 @@ def change_video_datetime(input_file, output_file, new_datetime):
     # Format datetime for ffmpeg (YYYY-MM-DD HH:MM:SS)
     new_date = datetime(int(Y), int(m), int(d), int(H), int(M), int(S))
     formatted_dt = new_date.strftime("%Y-%m-%d %H:%M:%S")
+    print(formatted_dt)
 
     command = [
         'ffmpeg',
@@ -29,6 +30,7 @@ def change_video_datetime(input_file, output_file, new_datetime):
         '-codec', 'copy',  # Copy streams without re-encoding
         output_file
     ]
+    print(command)
 
     subprocess.run(command, check=True)
 
