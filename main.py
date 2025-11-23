@@ -56,7 +56,7 @@ class main:
 
         # Format datetime for ffmpeg (YYYY-MM-DD HH:MM:SS)
         new_date = datetime(int(Y), int(m), int(d), int(H), int(M), int(S))
-        formatted_dt = new_date.strftime("%Y:%m:%d %H:%M:%S")
+        formatted_dt = new_date.strftime("%Y-%m-%d %H:%M:%S")
 
         return formatted_dt
 
@@ -141,6 +141,7 @@ class main:
                     logging.info("Converting " + srcfile + " => " + output)
                     formatted_dt = self.getDateFromFilename(srcfile)
                     #result = subprocess.run(["/usr/bin/HandBrakeCLI", "-i", filepath, "-o", output, "-e","x265","-q","28","--cfr"],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=my_env)
+                    print(["/usr/bin/ffmpeg", "-init_hw_device", "qsv=hw","-filter_hw_device","hw","-i", filepath,"-c:v","hevc_qsv","-global_quality","28","-preset","medium","-c:a","aac","-metadata",f"creation_time=\"{formatted_dt}Z\"", output])
                     result = subprocess.run(
                         ["/usr/bin/ffmpeg", "-init_hw_device", "qsv=hw","-filter_hw_device","hw","-i", filepath,"-c:v","hevc_qsv","-global_quality","28","-preset","medium","-c:a","aac","-metadata",f"creation_time=\"{formatted_dt}Z\"", output],
                         stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=my_env)
