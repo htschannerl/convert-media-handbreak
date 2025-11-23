@@ -20,7 +20,7 @@ class main:
             config = yaml.safe_load(f)
 
         warnings.filterwarnings('ignore')
-        moment = datetime.datetime.now().strftime('%Y-%m-%d-%H%M%S')
+        moment = datetime.now().strftime('%Y-%m-%d-%H%M%S')
         logdir = os.path.dirname(__file__) + "/logs/"
         if not os.path.isdir(logdir):
             os.mkdir(logdir)
