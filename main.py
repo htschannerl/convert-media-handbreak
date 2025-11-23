@@ -151,6 +151,7 @@ class main:
                         if resultDate.returncode != 0:
                             print("Error to chagne the date")
                             logging.error(f"Error to change the date of the file {output}")
+                            logging.error(resultDate.stderr)
 
                         dststat = os.stat(output)
                         lenVideo = getVideoLen.getVideoLen(output)
