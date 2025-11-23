@@ -5,7 +5,7 @@ import logging
 import warnings
 import pandas as pd
 import getVideoLen
-import change_video_datetime
+from datetime import datetime
 from include import job_parser
 import yaml
 from include.save_report import save_report
