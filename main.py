@@ -147,6 +147,7 @@ class main:
                         ["/usr/bin/ffmpeg", "-hwaccel", "qsv","-hwaccel_output_format","qsv","-i", filepath,"-c:v","hevc_qsv","-global_quality","28","-c:a","aac", output],
                         stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=my_env)
                     if result.returncode == 0:
+                        print("Changing the Metadata", output)
                         dststat = os.stat(output)
                         lenVideo = getVideoLen.getVideoLen(output)
                         data = [dstfile, round(srcstat.st_size / (1024 * 1024),2), round(dststat.st_size / (1024 * 1024),2),
