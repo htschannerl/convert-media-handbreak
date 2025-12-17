@@ -154,7 +154,7 @@ class main:
                                 round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2),
                                 cam, dstpath + "/", lenVideo[0], lenVideo[1],"no",date_value]
                         df.loc[srcfile] = data
-                        lat, lon, dt = change_video_datetime.read_first_gps_point(LOG_FILE)
+                        lat, lon = change_video_datetime.read_first_gps_point(LOG_FILE)
                         change_video_datetime.inject_metadata(output, lat, lon, formatted_dt)
                         #change_video_datetime.change_video_metadata(output,srcfile)
                         logging.info("Converted " + srcfile + " => " + output)

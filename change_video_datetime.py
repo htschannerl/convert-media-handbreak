@@ -84,18 +84,10 @@ def read_first_gps_point(log_file):
         for line in f:
             match = LOG_PATTERN.search(line)
             if match:
-                date_str = match.group("date")
-                time_str = match.group("time")
                 lat = float(match.group("lat"))
                 lon = -float(match.group("lon"))
-                print(date_str,time_str,lat,lon)
 
-                dt = datetime.strptime(
-                    f"{date_str} {time_str}",
-                    "%Y/%m/%d %H:%M:%S"
-                )
-
-                return lat, lon, dt
+                return lat, lon
 
     raise RuntimeError("No valid GPS data found in log file")
 
