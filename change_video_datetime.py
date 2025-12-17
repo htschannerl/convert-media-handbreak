@@ -92,15 +92,25 @@ def read_first_gps_point(log_file):
     raise RuntimeError("No valid GPS data found in log file")
 
 def inject_metadata(video, lat, lon, dt):
-    exiftool_cmd = [
-        "exiftool",
-        f"-GPSLatitude={lat}",
-        f"-GPSLongitude={lon}",
-        f"-CreateDate={dt}",
-        f"-TrackCreateDate={dt}",
-        f"-MediaCreateDate={dt}",
-        "-overwrite_original",
-        video
-    ]
+    if lat != 0 and lon != 0:
+        exiftool_cmd = [
+            "exiftool",
+            f"-GPSLatitude={lat}",
+            f"-GPSLongitude={lon}",
+            f"-CreateDate={dt}",
+            f"-TrackCreateDate={dt}",
+            f"-MediaCreateDate={dt}",
+            "-overwrite_original",
+            video
+        ]
+    else:
+        exiftool_cmd = [
+            "exiftool",
+            f"-CreateDate={dt}",
+            f"-TrackCreateDate={dt}",
+            f"-MediaCreateDate={dt}",
+            "-overwrite_original",
+            video
+        ]
 
     subprocess.run(exiftool_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
