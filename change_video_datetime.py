@@ -88,6 +88,7 @@ def read_first_gps_point(log_file):
                 time_str = match.group("time")
                 lat = float(match.group("lat"))
                 lon = -float(match.group("lon"))
+                print(date_str,time_str,lat,lon)
 
                 dt = datetime.strptime(
                     f"{date_str} {time_str}",
