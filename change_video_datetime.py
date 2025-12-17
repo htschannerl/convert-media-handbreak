@@ -103,4 +103,4 @@ def inject_metadata(video, lat, lon, dt):
         video
     ]
 
-    subprocess.run(exiftool_cmd, check=True)
+    subprocess.run(exiftool_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
