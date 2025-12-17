@@ -1,8 +1,8 @@
 import subprocess
 from datetime import datetime
 import os
-
 import exiftool
+
 def change_video_datetime(input_file, output_file, new_datetime):
     """
     Change the metadata datetime of a video file using ffmpeg
