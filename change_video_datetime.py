@@ -2,6 +2,7 @@ import subprocess
 from datetime import datetime
 import os
 import exiftool
+import re
 
 def change_video_datetime(input_file, output_file, new_datetime):
     """
@@ -70,3 +71,43 @@ def change_folder(srcpath):
     srcfiles = sorted(srcfiles)
     for srcfile in srcfiles:
         change_video_metadata(f"{srcpath}/{srcfile}",srcfile)
+
+LOG_PATTERN = re.compile(
+    r"(?P<date>\d{4}/\d{2}/\d{2})\s+"
+    r"(?P<time>\d{2}:\d{2}:\d{2})\s+"
+    r"N:(?P<lat>\d+\.\d+)\s+"
+    r"W:(?P<lon>\d+\.\d+)"
+)
+
+def read_first_gps_point(log_file):
+    with open(log_file, "r", encoding="utf-8", errors="ignore") as f:
+        for line in f:
+            match = LOG_PATTERN.search(line)
+            if match:
+                date_str = match.group("date")
+                time_str = match.group("time")
+                lat = float(match.group("lat"))
+                lon = -float(match.group("lon"))
+
+                dt = datetime.strptime(
+                    f"{date_str} {time_str}",
+                    "%Y/%m/%d %H:%M:%S"
+                )
+
+                return lat, lon, dt
+
+    raise RuntimeError("No valid GPS data found in log file")
+
+def inject_metadata(video, lat, lon, dt):
+    exiftool_cmd = [
+        "exiftool",
+        f"-GPSLatitude={lat}",
+        f"-GPSLongitude={lon}",
+        f"-CreateDate={dt}",
+        f"-TrackCreateDate={dt}",
+        f"-MediaCreateDate={dt}",
+        "-overwrite_original",
+        video
+    ]
+
+    subprocess.run(exiftool_cmd, check=True)

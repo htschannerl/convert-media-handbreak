@@ -1,4 +1,5 @@
 report: "/mnt/dados/DashCam/Converted/report.xlsx"
+gpsdata: "/mnt/dados/DashCam/Origin/GPSdata/"
 
 convert:
   front:

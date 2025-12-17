@@ -38,7 +38,8 @@ class main:
                 preset = config["convert"][convert]["preset"]
                 cam = config["convert"][convert]["cam"]
                 report = config["report"]
-                self.convert(src,dst,preset,cam,report)
+                gpsdata = config["gpsdata"]
+                self.convert(src,dst,preset,cam,report,gpsdata)
 
         if args.action == "backup":
             report = config["report"]
@@ -105,7 +106,7 @@ class main:
                     count = count + 1
                 print(file)
 
-    def convert(self,srcpath,dstpath,preset,cam,report):
+    def convert(self,srcpath,dstpath,preset,cam,report,gpsdata):
         my_env = os.environ.copy()
         count = 1
         srcfiles = os.listdir(srcpath)
@@ -119,7 +120,8 @@ class main:
         for srcfile in srcfiles:
             logging.info("Starting the number: " + str(count) + " of " + str(srcTotal))
             if os.path.isfile(srcpath + "/" + srcfile):
-                output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mkv"
+                output = srcfile[0:4] + "-" + srcfile[4:6] + "-" + srcfile[6:8] + "_" + srcfile[8:10] + "-" + srcfile[10:12] + "-" + srcfile[12:14] + ".mp4"
+                LOG_FILE = f"{gpsdata}/{srcfile[0:14]}.TXT"
                 date_str = srcfile[0:14]
                 date_value = pd.to_datetime(date_str, format="%Y%m%d%H%M%S")
                 filepath = srcpath + "/" + srcfile
@@ -142,7 +144,7 @@ class main:
                     formatted_dt = self.getDateFromFilename(srcfile)
                     #result = subprocess.run(["/usr/bin/HandBrakeCLI", "-i", filepath, "-o", output, "-e","x265","-q","28","--cfr"],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,env=my_env)
                     result = subprocess.run(
-                        ["/usr/bin/ffmpeg", "-init_hw_device", "qsv=hw","-filter_hw_device","hw","-i", filepath,"-c:v","hevc_qsv","-global_quality","28","-preset","medium","-c:a","aac","-metadata",f"creation_time={formatted_dt}Z", output],
+                        ["/usr/bin/ffmpeg", "-hwaccel", "qsv","-hwaccel_output_format","qsv","-i", filepath,"-c:v","hevc_qsv","-global_quality","28","-c:a","aac", output],
                         stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=my_env)
                     if result.returncode == 0:
                         dststat = os.stat(output)
@@ -151,6 +153,8 @@ class main:
                                 round(dststat.st_size / (1024 * 1024),2) - round(srcstat.st_size / (1024 * 1024),2),
                                 cam, dstpath + "/", lenVideo[0], lenVideo[1],"no",date_value]
                         df.loc[srcfile] = data
+                        lat, lon, dt = change_video_datetime.read_first_gps_point(LOG_FILE)
+                        change_video_datetime.inject_metadata(output, lat, lon, formatted_dt)
                         #change_video_datetime.change_video_metadata(output,srcfile)
                         logging.info("Converted " + srcfile + " => " + output)
                         print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)),lenVideo[0],lenVideo[1])
