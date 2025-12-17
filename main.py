@@ -162,7 +162,7 @@ class main:
                         change_video_datetime.inject_metadata(output, lat, lon, formatted_dt)
                         #change_video_datetime.change_video_metadata(output,srcfile)
                         logging.info("Converted " + srcfile + " => " + output)
-                        print("Converted",srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)),lenVideo[0],lenVideo[1])
+                        print("Converted",count,"of",srcTotal,srcfile,"=>",output,"-",str(round(srcstat.st_size / (1024 * 1024),2)),"-",str(round(dststat.st_size / (1024 * 1024),2)),lenVideo[0],lenVideo[1])
                         #os.remove(filepath)
                     else:
                         logging.error("Error " + srcfile + " => " + output)
