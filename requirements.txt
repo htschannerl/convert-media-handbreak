@@ -8,3 +8,4 @@ PyExifTool
 sqlalchemy
 dotenv
 oracledb
+psycopg2-binary
